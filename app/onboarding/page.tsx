@@ -6,9 +6,7 @@ import { useRouter } from "next/navigation";
 import { createUserProfile } from "@/services/userService";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-const avatars = [
-  "🚀", "🛡️", "🧙", "🏹", "🌊", "🔥", "🌿", "💎"
-];
+const avatars = ["🚀", "🛡️", "🧙", "🏹", "🌊", "🔥", "🌿", "💎"];
 
 export default function OnboardingPage() {
   const { user } = useAuth();
@@ -24,16 +22,12 @@ export default function OnboardingPage() {
       setError("No user authenticated. Please log in again.");
       return;
     }
-    
-    console.log("Submitting onboarding for user:", user.uid);
     setLoading(true);
     setError(null);
     try {
       await createUserProfile(user.uid, user.email!, characterName, selectedAvatar);
-      console.log("Profile created, navigating to dashboard...");
       router.push("/dashboard");
     } catch (err: any) {
-      console.error("Error creating profile:", err);
       setError(err.message || "Failed to create profile. Please try again.");
     } finally {
       setLoading(false);
@@ -42,62 +36,88 @@ export default function OnboardingPage() {
 
   return (
     <ProtectedRoute>
-      <div className="flex min-h-screen flex-col items-center justify-center bg-gray-950 px-4 text-white">
-        <div className="w-full max-w-md rounded-3xl bg-gray-900/50 backdrop-blur-xl p-10 shadow-2xl border border-white/10 relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-600/10 rounded-full blur-3xl"></div>
-          
-          <h2 className="mb-8 text-4xl font-black text-center bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Create Your Explorer
-          </h2>
-          
-          {error && (
-            <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/50 text-red-400 text-sm text-center">
-              {error}
-            </div>
-          )}
-          
-          <form onSubmit={handleSubmit} className="space-y-8 relative z-10">
-            <div>
-              <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-2">Explorer Name</label>
-              <input
-                type="text"
-                value={characterName}
-                onChange={(e) => setCharacterName(e.target.value)}
-                placeholder="Enter your name..."
-                className="w-full rounded-2xl bg-gray-800/50 border border-gray-700 p-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all placeholder:text-gray-600"
-                required
-              />
-            </div>
-            
-            <div>
-              <label className="block text-xs font-black uppercase tracking-widest text-gray-500 mb-4">Choose Your Avatar</label>
-              <div className="grid grid-cols-4 gap-4">
-                {avatars.map((avatar) => (
-                  <button
-                    key={avatar}
-                    type="button"
-                    onClick={() => setSelectedAvatar(avatar)}
-                    className={`text-4xl p-4 rounded-2xl border-2 transition-all duration-300 transform ${
-                      selectedAvatar === avatar
-                        ? "border-blue-500 bg-blue-500/20 scale-110 shadow-lg shadow-blue-500/20 animate-float"
-                        : "border-gray-800 bg-gray-800/30 hover:border-gray-600 hover:scale-105"
-                    }`}
-                  >
-                    {avatar}
-                  </button>
-                ))}
-              </div>
+      <div className="min-h-screen flex items-center justify-center bg-[#070b14] px-4">
+        {/* Background effects */}
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-1/4 left-1/3 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[150px]" />
+        </div>
+
+        <div className="relative z-10 w-full max-w-md">
+          <div className="card-base p-8" style={{ animation: 'scale-in 0.5s ease-out' }}>
+            {/* Header */}
+            <div className="text-center mb-8">
+              <div className="text-5xl mb-4">✨</div>
+              <h1 className="text-3xl font-black mb-2">
+                <span className="gradient-text">Create Your</span>{" "}
+                <span className="text-white">Explorer</span>
+              </h1>
+              <p className="text-sm text-gray-500">Choose your identity for this adventure</p>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-2xl bg-blue-600 p-5 font-black text-xl tracking-wide transition-all hover:bg-blue-700 hover:scale-[1.02] active:scale-95 disabled:opacity-50 shadow-xl shadow-blue-900/40"
-            >
-              {loading ? "Initializing..." : "Begin Adventure"}
-            </button>
-          </form>
+            {/* Error */}
+            {error && (
+              <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+                {error}
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Name */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
+                  Explorer Name
+                </label>
+                <input
+                  type="text"
+                  value={characterName}
+                  onChange={(e) => setCharacterName(e.target.value)}
+                  placeholder="Enter your name..."
+                  className="input-base"
+                  required
+                />
+              </div>
+
+              {/* Avatar */}
+              <div>
+                <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
+                  Choose Your Avatar
+                </label>
+                <div className="grid grid-cols-4 gap-3">
+                  {avatars.map((avatar) => (
+                    <button
+                      key={avatar}
+                      type="button"
+                      onClick={() => setSelectedAvatar(avatar)}
+                      className={`aspect-square rounded-2xl text-3xl flex items-center justify-center transition-all duration-200 ${
+                        selectedAvatar === avatar
+                          ? "bg-blue-600/20 border-2 border-blue-500 shadow-[0_0_20px_rgba(59,130,246,0.2)] scale-105"
+                          : "bg-white/[0.03] border-2 border-white/[0.06] hover:border-white/[0.12] hover:bg-white/[0.05]"
+                      }`}
+                    >
+                      {avatar}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Submit */}
+              <button
+                type="submit"
+                disabled={loading}
+                className="btn-primary w-full flex items-center justify-center gap-2"
+              >
+                {loading ? (
+                  <>
+                    <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                    Initializing...
+                  </>
+                ) : (
+                  "Begin Adventure"
+                )}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </ProtectedRoute>

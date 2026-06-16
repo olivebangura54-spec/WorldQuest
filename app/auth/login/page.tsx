@@ -33,47 +33,89 @@ export default function LoginPage() {
     }
   };
 
-
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-950 px-4 text-white">
-      <div className="w-full max-w-md rounded-xl bg-gray-900 p-8 shadow-2xl border border-gray-800">
-        <h2 className="mb-6 text-3xl font-bold text-center">Login to WorldQuest</h2>
-        {error && <p className="mb-4 text-sm text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-400">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full rounded-lg bg-gray-800 border border-gray-700 p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
+    <div className="min-h-screen flex items-center justify-center bg-[#070b14] px-4">
+      {/* Background effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/3 right-1/3 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[150px]" />
+      </div>
+
+      <div className="relative z-10 w-full max-w-md">
+        {/* Back link */}
+        <Link href="/" className="inline-flex items-center gap-2 text-gray-500 hover:text-white transition-colors mb-8 group">
+          <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          <span className="text-sm font-medium">Back</span>
+        </Link>
+
+        {/* Card */}
+        <div className="card-base p-8" style={{ animation: 'scale-in 0.5s ease-out' }}>
+          {/* Logo */}
+          <div className="text-center mb-8">
+            <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-2xl mx-auto mb-4">
+              🌍
+            </div>
+            <h1 className="text-2xl font-bold">Welcome back</h1>
+            <p className="text-sm text-gray-500 mt-1">Sign in to continue your quest</p>
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-400">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="mt-1 w-full rounded-lg bg-gray-800 border border-gray-700 p-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full rounded-lg bg-blue-600 p-3 font-semibold transition hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
-        </form>
-        <p className="mt-6 text-center text-sm text-gray-400">
-          Don&apos;t have an account?{" "}
-          <Link href="/auth/signup" className="text-blue-500 hover:underline">
-            Sign Up
-          </Link>
-        </p>
+
+          {/* Error */}
+          {error && (
+            <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+              {error}
+            </div>
+          )}
+
+          {/* Form */}
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input-base"
+                placeholder="you@example.com"
+                required
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">Password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="input-base"
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="btn-primary w-full flex items-center justify-center gap-2"
+            >
+              {isLoading ? (
+                <>
+                  <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
+                  Signing in...
+                </>
+              ) : (
+                "Sign In"
+              )}
+            </button>
+          </form>
+
+          {/* Footer */}
+          <p className="mt-6 text-center text-sm text-gray-500">
+            Don't have an account?{" "}
+            <Link href="/auth/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+              Create one
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );

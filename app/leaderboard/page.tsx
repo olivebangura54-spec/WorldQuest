@@ -20,95 +20,112 @@ export default function LeaderboardPage() {
         setLoading(false);
       }
     };
-
     fetchTopUsers();
   }, []);
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 text-white">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-yellow-500 border-t-transparent"></div>
+      <div className="flex min-h-screen items-center justify-center bg-[#070b14]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-amber-500 border-t-transparent" />
+          <span className="text-sm text-gray-500 font-medium">Loading rankings...</span>
+        </div>
       </div>
     );
   }
 
+  const getRankIcon = (rank: number) => {
+    if (rank === 1) return "🥇";
+    if (rank === 2) return "🥈";
+    if (rank === 3) return "🥉";
+    return null;
+  };
+
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-950 text-white p-6">
-        <header className="flex items-center mb-10 max-w-4xl mx-auto w-full">
-          <Link href="/dashboard" className="text-gray-400 hover:text-white transition flex items-center group">
-            <span className="mr-2 group-hover:-translate-x-1 transition-transform">←</span>
-            Back to Dashboard
-          </Link>
-          <h1 className="text-3xl font-bold ml-auto text-yellow-500">Global Leaderboard</h1>
-        </header>
+      <div className="min-h-screen bg-[#070b14] text-white">
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-1/4 right-1/4 w-[500px] h-[500px] bg-amber-600/5 rounded-full blur-[150px]" />
+        </div>
 
-        <main className="max-w-4xl mx-auto">
-          <div className="bg-gray-900 rounded-3xl border border-gray-800 overflow-hidden shadow-2xl">
-            <table className="w-full text-left">
-              <thead>
-                <tr className="bg-gray-800/50 text-gray-400 text-sm uppercase tracking-widest">
-                  <th className="px-6 py-4 font-semibold">Rank</th>
-                  <th className="px-6 py-4 font-semibold">Explorer</th>
-                  <th className="px-6 py-4 font-semibold">Level</th>
-                  <th className="px-6 py-4 font-semibold text-right">Total XP</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-800">
+        <div className="relative z-10 max-w-4xl mx-auto px-6 py-8">
+          {/* Header */}
+          <header className="flex items-center justify-between mb-10">
+            <Link href="/dashboard" className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group">
+              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="text-sm font-medium">Dashboard</span>
+            </Link>
+            <h1 className="text-xl font-bold gradient-text-gold">Global Leaderboard</h1>
+          </header>
+
+          {/* Top 3 Podium */}
+          {topUsers.length >= 3 && (
+            <div className="grid grid-cols-3 gap-4 mb-10" style={{ animation: 'slide-up 0.6s ease-out' }}>
+              {[1, 0, 2].map((rankIndex) => {
+                const user = topUsers[rankIndex];
+                if (!user) return null;
+                const rank = rankIndex + 1;
+                const isFirst = rank === 1;
+                return (
+                  <div
+                    key={user.uid}
+                    className={`card-base p-5 text-center ${isFirst ? "bg-gradient-to-b from-amber-600/10 to-transparent border-amber-500/20 -mt-4" : ""}`}
+                  >
+                    <div className="text-3xl mb-3">{getRankIcon(rank)}</div>
+                    <div className="text-3xl mb-2">{user.avatar}</div>
+                    <div className="font-bold text-sm mb-1 truncate">{user.characterName}</div>
+                    <div className="text-xs text-gray-500 mb-3">{user.title}</div>
+                    <div className="text-lg font-bold text-amber-400">{user.xp.toLocaleString()} XP</div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Full Rankings Table */}
+          <div className="card-base overflow-hidden" style={{ animation: 'slide-up 0.6s ease-out 0.1s both' }}>
+            <div className="p-5 border-b border-white/[0.06]">
+              <h2 className="font-bold text-lg">Full Rankings</h2>
+            </div>
+            {topUsers.length === 0 ? (
+              <div className="p-20 text-center">
+                <div className="text-4xl mb-4">🏆</div>
+                <p className="text-gray-500">No explorers found yet. Be the first!</p>
+              </div>
+            ) : (
+              <div className="divide-y divide-white/[0.04]">
                 {topUsers.map((user, index) => {
                   const rank = index + 1;
-                  const isTopThree = rank <= 3;
-                  
                   return (
-                    <tr 
-                      key={user.uid} 
-                      className={`transition-colors hover:bg-gray-800/30 ${isTopThree ? 'bg-yellow-500/5' : ''}`}
+                    <div
+                      key={user.uid}
+                      className="flex items-center gap-4 px-5 py-4 hover:bg-white/[0.02] transition-colors"
                     >
-                      <td className="px-6 py-5">
-                        <div className="flex items-center">
-                          {rank === 1 ? (
-                            <span className="text-2xl">🥇</span>
-                          ) : rank === 2 ? (
-                            <span className="text-2xl">🥈</span>
-                          ) : rank === 3 ? (
-                            <span className="text-2xl">🥉</span>
-                          ) : (
-                            <span className="text-gray-500 font-mono font-bold w-6 text-center">{rank}</span>
-                          )}
-                        </div>
-                      </td>
-                      <td className="px-6 py-5">
-                        <div className="flex items-center space-x-4">
-                          <div className="text-2xl bg-gray-800 w-10 h-10 flex items-center justify-center rounded-full border border-gray-700">
-                            {user.avatar}
-                          </div>
-                          <div>
-                            <div className="font-bold text-gray-100">{user.characterName}</div>
-                            <div className="text-xs text-gray-500">{user.title}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-5">
-                        <span className="bg-gray-800 px-3 py-1 rounded-full text-sm font-bold border border-gray-700">
-                          Lvl {user.level}
-                        </span>
-                      </td>
-                      <td className="px-6 py-5 text-right font-mono font-bold text-yellow-500">
-                        {user.xp.toLocaleString()} XP
-                      </td>
-                    </tr>
+                      <div className="w-8 text-center shrink-0">
+                        {getRankIcon(rank) || (
+                          <span className="text-sm font-mono text-gray-600">{rank}</span>
+                        )}
+                      </div>
+                      <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-lg shrink-0">
+                        {user.avatar}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-bold text-sm truncate">{user.characterName}</div>
+                        <div className="text-xs text-gray-600">{user.title}</div>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <div className="font-bold text-sm text-amber-400">{user.xp.toLocaleString()} XP</div>
+                        <div className="text-xs text-gray-600">Lvl {user.level}</div>
+                      </div>
+                    </div>
                   );
                 })}
-              </tbody>
-            </table>
-
-            {topUsers.length === 0 && (
-              <div className="text-center py-20">
-                <p className="text-gray-500">No explorers found yet. Be the first!</p>
               </div>
             )}
           </div>
-        </main>
+        </div>
       </div>
     </ProtectedRoute>
   );

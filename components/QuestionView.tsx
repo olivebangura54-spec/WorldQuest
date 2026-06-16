@@ -18,7 +18,6 @@ export default function QuestionView({ question, onAnswer }: QuestionViewProps) 
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Reset state when question changes
   useEffect(() => {
     setSelectedOption(null);
     setIsSubmitted(false);
@@ -26,110 +25,103 @@ export default function QuestionView({ question, onAnswer }: QuestionViewProps) 
 
   const handleSelect = (option: string) => {
     if (isSubmitted) return;
-    
     setSelectedOption(option);
     setIsSubmitted(true);
     const isCorrect = option === question.correctAnswer;
-    
-    // Delay to show feedback before moving on
     setTimeout(() => {
       onAnswer(isCorrect);
     }, 2500);
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-8 bg-gray-900 border border-gray-800 rounded-3xl shadow-2xl animate-in zoom-in-95 duration-500">
-      <div className="flex justify-between items-center mb-8">
-        <span className={`px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase border ${
-          question.isBoss ? "bg-red-900/30 border-red-500 text-red-500" : "bg-blue-900/30 border-blue-500 text-blue-500"
-        }`}>
-          {question.isBoss ? "Boss Challenge" : "Knowledge Check"}
-        </span>
-        <div className="flex items-center space-x-2">
-          {question.isBoss && <span className="text-2xl animate-pulse">💀</span>}
+    <div className="w-full max-w-2xl mx-auto" style={{ animation: 'scale-in 0.4s ease-out' }}>
+      <div className="card-base p-8">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <span className={question.isBoss ? "badge-red" : "badge-blue"}>
+            {question.isBoss ? "⚔️ Boss Challenge" : "Knowledge Check"}
+          </span>
           {isSubmitted && (
-            <span className={`text-sm font-bold animate-bounce ${selectedOption === question.correctAnswer ? "text-green-500" : "text-red-500"}`}>
-              {selectedOption === question.correctAnswer ? "PERFECT!" : "KEEP GOING!"}
+            <span className={`text-sm font-bold ${selectedOption === question.correctAnswer ? "text-emerald-400" : "text-rose-400"}`}>
+              {selectedOption === question.correctAnswer ? "✓ Correct!" : "✗ Incorrect"}
             </span>
           )}
         </div>
-      </div>
 
-      <h2 className="text-2xl font-bold mb-10 leading-snug">
-        {question.question}
-      </h2>
+        {/* Question */}
+        <h2 className="text-xl font-bold mb-8 leading-relaxed text-gray-100">
+          {question.question}
+        </h2>
 
-      <div className="grid grid-cols-1 gap-4 mb-8">
-        {question.options.map((option) => {
-          const isCorrect = option === question.correctAnswer;
-          const isSelected = option === selectedOption;
-          
-          let buttonClass = "w-full text-left p-5 rounded-2xl border-2 transition-all font-medium text-lg relative overflow-hidden ";
-          
-          if (isSubmitted) {
-            if (isCorrect) {
-              buttonClass += "border-green-500 bg-green-500/10 text-green-400 shadow-[0_0_15px_rgba(34,197,94,0.2)]";
-            } else if (isSelected) {
-              buttonClass += "border-red-500 bg-red-500/10 text-red-400 shadow-[0_0_15px_rgba(239,68,68,0.2)]";
+        {/* Options */}
+        <div className="space-y-3 mb-6">
+          {question.options.map((option, index) => {
+            const isCorrect = option === question.correctAnswer;
+            const isSelected = option === selectedOption;
+
+            let optionClass = "w-full text-left p-4 rounded-xl border-2 transition-all duration-200 font-medium relative overflow-hidden ";
+
+            if (isSubmitted) {
+              if (isCorrect) {
+                optionClass += "border-emerald-500/50 bg-emerald-500/10 text-emerald-300";
+              } else if (isSelected) {
+                optionClass += "border-rose-500/50 bg-rose-500/10 text-rose-300";
+              } else {
+                optionClass += "border-white/[0.04] text-gray-600 opacity-40";
+              }
             } else {
-              buttonClass += "border-gray-800 text-gray-600 opacity-50";
+              optionClass += "border-white/[0.06] bg-white/[0.02] hover:border-blue-500/30 hover:bg-blue-500/5 text-gray-300 cursor-pointer";
             }
-          } else {
-            buttonClass += "border-gray-800 bg-gray-800/50 hover:border-blue-500/50 hover:bg-gray-800 group";
-          }
 
-          return (
-            <button
-              key={option}
-              onClick={() => handleSelect(option)}
-              disabled={isSubmitted}
-              className={buttonClass}
-            >
-              <div className="flex items-center relative z-10">
-                <span className={`w-8 h-8 flex items-center justify-center rounded-full mr-4 border transition-all ${
-                  isSubmitted && isCorrect 
-                    ? "border-green-500 bg-green-500 text-white" 
-                    : isSubmitted && isSelected 
-                      ? "border-red-500 bg-red-500 text-white" 
-                      : isSelected
-                        ? "border-blue-500 bg-blue-500 text-white"
-                        : "border-gray-600 text-gray-400 group-hover:border-blue-400"
-                }`}>
-                  {isSubmitted && isCorrect ? "✓" : isSubmitted && isSelected ? "✗" : ""}
-                </span>
-                {option}
+            return (
+              <button
+                key={option}
+                onClick={() => handleSelect(option)}
+                disabled={isSubmitted}
+                className={optionClass}
+              >
+                <div className="flex items-center gap-4">
+                  <span className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold transition-all shrink-0 ${
+                    isSubmitted && isCorrect
+                      ? "bg-emerald-500 text-white"
+                      : isSubmitted && isSelected
+                        ? "bg-rose-500 text-white"
+                        : isSelected
+                          ? "bg-blue-500 text-white"
+                          : "bg-white/[0.06] text-gray-500"
+                  }`}>
+                    {isSubmitted && isCorrect ? "✓" : isSubmitted && isSelected ? "✗" : String.fromCharCode(65 + index)}
+                  </span>
+                  <span>{option}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Explanation */}
+        {isSubmitted && question.explanation && (
+          <div className="p-5 rounded-xl bg-blue-500/5 border border-blue-500/10" style={{ animation: 'slide-up 0.4s ease-out' }}>
+            <div className="flex items-start gap-3">
+              <span className="text-lg shrink-0 mt-0.5">💡</span>
+              <div>
+                <p className="text-[10px] font-bold text-blue-400 uppercase tracking-widest mb-1">Did you know?</p>
+                <p className="text-sm text-gray-400 leading-relaxed">{question.explanation}</p>
               </div>
-              
-              {/* Feedback Pulse */}
-              {isSubmitted && isSelected && (
-                <div className={`absolute inset-0 animate-ping opacity-10 ${isCorrect ? "bg-green-500" : "bg-red-500"}`}></div>
-              )}
-            </button>
-          );
-        })}
-      </div>
-
-      {isSubmitted && question.explanation && (
-        <div className="mt-6 p-6 bg-blue-500/10 border border-blue-500/20 rounded-2xl animate-in fade-in slide-in-from-top-4 duration-500">
-          <div className="flex items-start">
-            <span className="text-xl mr-3">💡</span>
-            <div>
-              <p className="text-sm text-blue-400 font-bold uppercase tracking-widest mb-1">Did you know?</p>
-              <p className="text-gray-300 leading-relaxed">{question.explanation}</p>
             </div>
           </div>
-        </div>
-      )}
-      
-      {/* Auto-progression indicator */}
-      {isSubmitted && (
-        <div className="mt-8 flex items-center justify-center space-x-2">
-          <div className="h-1 w-24 bg-gray-800 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-500 animate-[progress_2.5s_linear]"></div>
+        )}
+
+        {/* Auto-progression indicator */}
+        {isSubmitted && (
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <div className="h-1 w-20 bg-gray-800 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-500/60 animate-[progress_2.5s_linear]" />
+            </div>
+            <span className="text-[10px] text-gray-600 uppercase font-bold tracking-widest">Next step</span>
           </div>
-          <span className="text-[10px] text-gray-500 uppercase font-black tracking-widest">Next Step Loading...</span>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

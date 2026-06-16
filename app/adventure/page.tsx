@@ -27,90 +27,135 @@ export default function AdventurePage() {
 
   if (loading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-950 text-white">
-        <div className="h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+      <div className="flex min-h-screen items-center justify-center bg-[#070b14]">
+        <div className="flex flex-col items-center gap-4">
+          <div className="h-10 w-10 animate-spin rounded-full border-2 border-blue-500 border-t-transparent" />
+          <span className="text-sm text-gray-500 font-medium">Loading chapters...</span>
+        </div>
       </div>
     );
   }
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-950 text-white p-6">
-        <header className="flex items-center mb-10 max-w-5xl mx-auto">
-          <Link href="/dashboard" className="text-blue-500 hover:text-blue-400 transition flex items-center group">
-            <span className="mr-2 transition-transform group-hover:-translate-x-1">←</span> 
-            Back to Dashboard
-          </Link>
-          <h1 className="text-3xl font-bold ml-auto">Adventure Mode</h1>
-        </header>
+      <div className="min-h-screen bg-[#070b14] text-white">
+        {/* Ambient background */}
+        <div className="fixed inset-0 pointer-events-none">
+          <div className="absolute top-1/3 left-1/4 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[150px]" />
+          <div className="absolute bottom-1/3 right-1/4 w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[150px]" />
+        </div>
 
-        <main className="max-w-5xl mx-auto">
-          <div className="mb-10 text-center">
-            <h2 className="text-2xl font-bold text-gray-200">The Quest for the Knowledge Crystals</h2>
-            <p className="text-gray-400 mt-2">Complete chapters to restore the World Archive.</p>
+        <div className="relative z-10 max-w-6xl mx-auto px-6 py-8">
+          {/* Header */}
+          <header className="flex items-center justify-between mb-10">
+            <Link href="/dashboard" className="flex items-center gap-2 text-gray-500 hover:text-white transition-colors group">
+              <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+              <span className="text-sm font-medium">Dashboard</span>
+            </Link>
+            <h1 className="text-xl font-bold">Adventure Mode</h1>
+          </header>
+
+          {/* Hero Section */}
+          <div className="text-center mb-12" style={{ animation: 'slide-up 0.6s ease-out' }}>
+            <h2 className="text-3xl md:text-4xl font-black mb-3">
+              <span className="gradient-text">The Quest for the</span>{" "}
+              <span className="text-white">Knowledge Crystals</span>
+            </h2>
+            <p className="text-gray-500 text-lg max-w-lg mx-auto">
+              Complete chapters to restore the World Archive.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {CHAPTERS.map((chapter) => {
+          {/* Chapter Grid - Vertical Path Layout */}
+          <div className="max-w-2xl mx-auto space-y-4">
+            {CHAPTERS.map((chapter, index) => {
               const isCompleted = profile?.chaptersCompleted.includes(chapter.id);
-              // Chapter 1 is always unlocked. Others unlock if the previous one is completed.
               const isUnlocked = chapter.id === 1 || profile?.chaptersCompleted.includes(chapter.id - 1);
 
               return (
-                <div 
+                <div
                   key={chapter.id}
-                  className={`relative group bg-gray-900 border-2 rounded-3xl p-6 transition flex flex-col ${
-                    isUnlocked 
-                      ? "border-gray-800 hover:border-blue-500 hover:shadow-2xl cursor-pointer" 
-                      : "border-gray-800 opacity-60 grayscale cursor-not-allowed"
-                  }`}
-                  onClick={() => isUnlocked && router.push(`/adventure/chapter/${chapter.id}`)}
+                  style={{ animation: `slide-up 0.5s ease-out ${index * 0.08}s both` }}
                 >
-                  <div className="flex justify-between items-start mb-6">
-                    <div className={`text-5xl p-4 rounded-2xl bg-gray-800 border ${isUnlocked ? 'border-blue-500/30' : 'border-gray-700'}`}>
-                      {chapter.image}
+                  <button
+                    onClick={() => isUnlocked && router.push(`/adventure/chapter/${chapter.id}`)}
+                    disabled={!isUnlocked}
+                    className={`w-full text-left group transition-all duration-300 ${
+                      isUnlocked
+                        ? "cursor-pointer"
+                        : "opacity-40 cursor-not-allowed"
+                    }`}
+                  >
+                    <div className={`card-base p-6 flex items-center gap-5 ${
+                      isCompleted
+                        ? "bg-gradient-to-r from-blue-600/10 to-purple-600/5 border-blue-500/20"
+                        : isUnlocked
+                          ? "hover:border-blue-500/30"
+                          : ""
+                    }`}>
+                      {/* Chapter Number */}
+                      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-300 ${
+                        isCompleted
+                          ? "bg-blue-600/20 border border-blue-500/30"
+                          : isUnlocked
+                            ? "bg-white/[0.03] border border-white/[0.06] group-hover:border-blue-500/30 group-hover:bg-blue-600/10"
+                            : "bg-white/[0.02] border border-white/[0.04]"
+                      }`}>
+                        {isCompleted ? (
+                          <svg className="w-6 h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                        ) : isUnlocked ? (
+                          <span className="text-2xl">{chapter.image}</span>
+                        ) : (
+                          <svg className="w-6 h-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                          </svg>
+                        )}
+                      </div>
+
+                      {/* Chapter Info */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-3 mb-1">
+                          <span className="text-xs font-bold text-gray-600 uppercase tracking-wider">Chapter {chapter.id}</span>
+                          {isCompleted && (
+                            <span className="badge-green text-[10px] py-0.5">Completed</span>
+                          )}
+                          {!isUnlocked && (
+                            <span className="badge text-[10px] py-0.5 bg-gray-800/50 text-gray-600 border border-gray-700/50">Locked</span>
+                          )}
+                          {isUnlocked && !isCompleted && (
+                            <span className="badge-blue text-[10px] py-0.5">Ready</span>
+                          )}
+                        </div>
+                        <h3 className="text-lg font-bold mb-0.5 group-hover:text-blue-400 transition-colors">{chapter.title}</h3>
+                        <p className="text-sm text-gray-500 line-clamp-1">{chapter.description}</p>
+                      </div>
+
+                      {/* Arrow */}
+                      {isUnlocked && (
+                        <svg className="w-5 h-5 text-gray-700 group-hover:text-blue-400 group-hover:translate-x-1 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                        </svg>
+                      )}
                     </div>
-                    {isCompleted ? (
-                      <span className="bg-green-600/20 text-green-400 text-xs font-bold px-3 py-1 rounded-full border border-green-600/50">
-                        COMPLETED
-                      </span>
-                    ) : !isUnlocked ? (
-                      <span className="bg-gray-800 text-gray-500 text-xs font-bold px-3 py-1 rounded-full border border-gray-700">
-                        LOCKED
-                      </span>
-                    ) : (
-                      <span className="bg-blue-600/20 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-600/50">
-                        READY
-                      </span>
-                    )}
-                  </div>
+                  </button>
 
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition">
-                    Chapter {chapter.id}
-                  </h3>
-                  <h4 className="text-lg font-semibold text-gray-100 mb-3">{chapter.title}</h4>
-                  <p className="text-gray-400 text-sm mb-8 flex-1 leading-relaxed">
-                    {chapter.description}
-                  </p>
-                  
-                  <div className="text-xs font-mono text-blue-500/70 mb-4">
-                    REWARD: {chapter.crystalName}
-                  </div>
-
-                  {isUnlocked ? (
-                    <button className="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition-all shadow-lg active:scale-95">
-                      {isCompleted ? "Replay Adventure" : "Begin Journey"}
-                    </button>
-                  ) : (
-                    <div className="w-full bg-gray-800 text-gray-600 py-3 rounded-xl font-bold text-center">
-                      Locked
+                  {/* Connector line between chapters */}
+                  {index < CHAPTERS.length - 1 && (
+                    <div className="flex justify-center py-1">
+                      <div className={`w-px h-4 ${
+                        isCompleted ? "bg-blue-500/30" : "bg-gray-800/50"
+                      }`} />
                     </div>
                   )}
                 </div>
               );
             })}
           </div>
-        </main>
+        </div>
       </div>
     </ProtectedRoute>
   );
