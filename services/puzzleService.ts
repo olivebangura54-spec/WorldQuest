@@ -1,6 +1,5 @@
 import { db } from "@/lib/firebase";
 import { doc, updateDoc, arrayUnion } from "firebase/firestore";
-
 export interface Puzzle {
   id: string;
   title: string;
@@ -9,20 +8,24 @@ export interface Puzzle {
   difficulty: "easy" | "medium" | "hard";
   location: string;
   description: string;
+
+  xpReward?: number;
+
   chapterId?: number;
 }
 
 export const MOCK_PUZZLES: Puzzle[] = [
   // Chapter 1
   { 
-    id: "p1", 
-    title: "The Great Sphinx", 
-    imageUrl: "https://images.unsplash.com/photo-1553913861-c0fddf2619ee?auto=format&fit=crop&q=80&w=800", 
-    category: "Landmarks", 
-    difficulty: "easy", 
+    id: "p1",
+    title: "The Great Sphinx",
+    imageUrl: "https://images.unsplash.com/photo-1539768942893-daf53e736b68?auto=format&fit=crop&q=80&w=800",
+    category: "Landmarks",
+    difficulty: "easy",
     location: "Giza, Egypt",
-    description: "The mythical creature with the head of a human and the body of a lion.",
-    chapterId: 1 
+    description: "A monumental limestone statue of a reclining sphinx, one of the world's largest and oldest monuments.",
+    xpReward: 15,
+    chapterId: 1
   },
   // Chapter 2
   { 

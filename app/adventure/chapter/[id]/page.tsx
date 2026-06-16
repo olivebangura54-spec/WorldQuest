@@ -63,7 +63,7 @@ export default function ChapterPage({ params }: { params: Promise<{ id: string }
     setChapter(chapterData);
 
     const scenes = getStoryScenes(chapterId);
-    const questions = await getQuestionsForChapter(chapterId);
+    const questions = getQuestionsForChapter(chapterId);
     
     // Get current streak from profile
     let currentStreak = 0;

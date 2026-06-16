@@ -9,6 +9,7 @@ import Link from "next/link";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { LEVEL_THRESHOLDS, calculateLevel } from "@/services/xpService";
 
 export default function DashboardPage() {
   const { user } = useAuth();
@@ -92,7 +93,14 @@ export default function DashboardPage() {
                 <div className="w-full bg-gray-800 rounded-full h-3 overflow-hidden">
                   <div 
                     className="bg-blue-600 h-full transition-all duration-500" 
-                    style={{ width: `${Math.min((profile.xp % 100), 100)}%` }}
+                    style={{ width: `${(() => {
+                      const currentLevel = calculateLevel(profile.xp);
+                      const currentThreshold = LEVEL_THRESHOLDS[currentLevel - 1] || 0;
+                      const nextThreshold = LEVEL_THRESHOLDS[currentLevel] || LEVEL_THRESHOLDS[LEVEL_THRESHOLDS.length - 1];
+                      const xpInLevel = profile.xp - currentThreshold;
+                      const xpNeeded = nextThreshold - currentThreshold;
+                      return xpNeeded > 0 ? Math.min((xpInLevel / xpNeeded) * 100, 100) : 100;
+                    })()}%` }}
                   ></div>
                 </div>
               </div>

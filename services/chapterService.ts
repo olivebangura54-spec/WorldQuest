@@ -1,5 +1,6 @@
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, getDoc } from "firebase/firestore";
+import { UserProfile } from "./userService";
 
 export interface Chapter {
   id: number;
@@ -49,11 +50,25 @@ export const CHAPTERS: Chapter[] = [
 
 /**
  * Marks a chapter as completed for the user
+ * Only advances currentChapter if the new value would be higher
  */
 export const completeChapter = async (uid: string, chapterId: number) => {
   const userRef = doc(db, "users", uid);
-  await updateDoc(userRef, {
+  const userSnap = await getDoc(userRef);
+  
+  const updates: Record<string, any> = {
     chaptersCompleted: arrayUnion(chapterId),
-    currentChapter: chapterId + 1,
-  });
+  };
+
+  // Only advance currentChapter if the new value is higher
+  if (userSnap.exists()) {
+    const profile = userSnap.data() as UserProfile;
+    if (chapterId + 1 > (profile.currentChapter || 1)) {
+      updates.currentChapter = chapterId + 1;
+    }
+  } else {
+    updates.currentChapter = chapterId + 1;
+  }
+
+  await updateDoc(userRef, updates);
 };
