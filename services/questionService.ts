@@ -7,6 +7,7 @@ export interface Question {
   category: string;
   chapterId: number;
   isBoss?: boolean;
+  xpReward?: number;
 }
 
 export const CHAPTER_QUESTIONS: Record<number, Question[]> = {
@@ -435,6 +436,6 @@ export const CHAPTER_QUESTIONS: Record<number, Question[]> = {
 /**
  * Fetches all questions (standard + boss) for a specific chapter
  */
-export const getQuestionsForChapter = async (chapterId: number): Promise<Question[]> => {
+export const getQuestionsForChapter = (chapterId: number): Question[] => {
   return CHAPTER_QUESTIONS[chapterId] || [];
 };
