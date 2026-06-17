@@ -3,10 +3,10 @@
 import { useEffect, useState, use } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { getStoryScenes, StoryScene as StorySceneType } from "@/services/storyService";
-import { CHAPTERS, completeChapter } from "@/services/chapterService";
+import { CHAPTERS, completeChapter, Chapter } from "@/services/chapterService";
 import { getQuestionsForChapter, Question } from "@/services/questionService";
 import { addXP } from "@/services/xpService";
-import { getPuzzleForChapter, completePuzzle as savePuzzleCompletion } from "@/services/puzzleService";
+import { getPuzzleForChapter, completePuzzle as savePuzzleCompletion, Puzzle } from "@/services/puzzleService";
 import { checkAchievements } from "@/services/achievementService";
 import { getUserProfile } from "@/services/userService";
 import ProtectedRoute from "@/components/ProtectedRoute";
@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 
 type ChapterStep = {
   type: "story" | "question" | "puzzle";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any;
 };
 
@@ -39,7 +40,7 @@ export default function ChapterPage({ params }: { params: Promise<{ id: string }
   
   const [steps, setSteps] = useState<ChapterStep[]>([]);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [chapter, setChapter] = useState<any>(null);
+  const [chapter, setChapter] = useState<Chapter | null>(null);
   const [loading, setLoading] = useState(true);
   const [showXPPopup, setShowXPPopup] = useState<number | null>(null);
   const [isFinished, setIsFinished] = useState(false);

@@ -2,31 +2,65 @@
 - Environments: .env.local
 
   Creating an optimized production build ...
-Γ£ô Compiled successfully in 19.6s
-  Running TypeScript ...
-  Finished TypeScript in 14.6s ...
-  Collecting page data using 3 workers ...
-  Generating static pages using 3 workers (0/12) ...
-  Generating static pages using 3 workers (3/12) 
-  Generating static pages using 3 workers (6/12) 
-  Generating static pages using 3 workers (9/12) 
-Γ£ô Generating static pages using 3 workers (12/12) in 1606ms
-  Finalizing page optimization ...
-
-Route (app)
-Γöî Γùï /
-Γö£ Γùï /_not-found
-Γö£ Γùï /adventure
-Γö£ ╞Æ /adventure/chapter/[id]
-Γö£ Γùï /auth/login
-Γö£ Γùï /auth/signup
-Γö£ Γùï /dashboard
-Γö£ Γùï /leaderboard
-Γö£ Γùï /onboarding
-Γö£ Γùï /profile
-Γöö Γùï /puzzle-vault
+Turbopack build encountered 2 warnings:
+[next]/internal/font/google/caa3a2e1cccd8315-s.p.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2
 
 
-Γùï  (Static)   prerendered as static content
-╞Æ  (Dynamic)  server-rendered on demand
+[next]/internal/font/google/fef07dbb0973bf53-s.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwRGFWNOITddY4.woff2
 
+
+
+> Build error occurred
+Error: Turbopack build failed with 2 errors:
+[next]/internal/font/google/geist_a71539c9.module.css:7:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+   5 |   font-weight: 100 900;
+   6 |   font-display: swap;
+>  7 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+   8 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+   9 | }
+  10 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/geist_a71539c9.module.css
+    [next]/internal/font/google/geist_a71539c9.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/geist_a71539c9.module.css:43:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  41 |   font-weight: 100 900;
+  42 |   font-display: swap;
+> 43 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  44 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  45 | }
+  46 | @font-face {
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/geist_a71539c9.module.css
+    [next]/internal/font/google/geist_a71539c9.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> ([next]/internal/font/google/geist_a71539c9.module.css:7:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/geist_a71539c9.module.css:43:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)

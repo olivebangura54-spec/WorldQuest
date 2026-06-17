@@ -19,7 +19,6 @@ export interface UserProfile {
 }
 
 export const createUserProfile = async (uid: string, email: string, characterName: string, avatar: string) => {
-  console.log("Starting createUserProfile for:", uid);
   const userRef = doc(db, "users", uid);
   const profile: UserProfile = {
     uid,
@@ -37,15 +36,8 @@ export const createUserProfile = async (uid: string, email: string, characterNam
     createdAt: new Date().toISOString(),
   };
 
-  try {
-    console.log("Setting doc in Firestore...");
-    await setDoc(userRef, profile);
-    console.log("Firestore doc set successfully.");
-    return profile;
-  } catch (error) {
-    console.error("Error in setDoc:", error);
-    throw error;
-  }
+  await setDoc(userRef, profile);
+  return profile;
 };
 
 export const getUserProfile = async (uid: string) => {

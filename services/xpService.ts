@@ -1,5 +1,5 @@
 import { db } from "@/lib/firebase";
-import { doc, updateDoc, increment, getDoc } from "firebase/firestore";
+import { doc, updateDoc, increment, getDoc, FieldValue } from "firebase/firestore";
 import { UserProfile } from "./userService";
 
 /**
@@ -77,8 +77,8 @@ export const addXP = async (uid: string, amount: number) => {
   const newLevel = calculateLevel(newXP);
   const newTitle = getTitleForLevel(newLevel);
 
-  const updates: Partial<UserProfile> = {
-    xp: increment(amount) as any,
+  const updates: { [key: string]: FieldValue | number | string } = {
+    xp: increment(amount),
     level: newLevel,
     title: newTitle,
   };

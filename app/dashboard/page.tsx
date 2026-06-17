@@ -21,10 +21,7 @@ export default function DashboardPage() {
     const fetchProfile = async () => {
       if (user) {
         try {
-          const streakInfo = await checkAndUpdateStreak(user.uid);
-          if (streakInfo) {
-            console.log("Streak updated:", streakInfo);
-          }
+          await checkAndUpdateStreak(user.uid);
           const data = await getUserProfile(user.uid);
           if (data) {
             setProfile(data);
