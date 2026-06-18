@@ -390,6 +390,27 @@ body {
   100% { transform: scale(1); }
 }
 
+@keyframes auth-float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes error-shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+  20%, 40%, 60%, 80% { transform: translateX(4px); }
+}
+
+@keyframes stagger-fade-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(168,85,247,0.3); }
+  50% { box-shadow: 0 0 40px rgba(168,85,247,0.5), 0 0 60px rgba(34,211,238,0.2); }
+}
+
 /* ═══════════════════════════════════════════
    SCROLL REVEAL UTILITIES
    ═══════════════════════════════════════════ */
