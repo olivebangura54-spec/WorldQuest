@@ -42,7 +42,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_freetown",
         name: "Freetown Harbor",
-        artPrompt: "Freetown harbor with colorful fishing boats and bustling waterfront" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Freetown harbor Sierra Leone, colorful wooden fishing boats, green forested hills behind, warm sunset, African coastal town, bustling waterfront" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?auto=format&fit=crop&q=80&w=800",
         difficulty: "easy",
         xpReward: 20,
@@ -50,7 +50,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_cotton_tree",
         name: "Cotton Tree",
-        artPrompt: "The historic Cotton Tree in Freetown, massive ancient tree with wide canopy" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of the historic Cotton Tree in Freetown Sierra Leone, massive kapok tree with wide canopy, surrounded by colonial buildings, warm golden hour lighting, iconic landmark" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=800",
         difficulty: "easy",
         xpReward: 20,
@@ -58,7 +58,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_banana_islands",
         name: "Banana Islands",
-        artPrompt: "Banana Islands beach with turquoise water and white sand" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Banana Islands Sierra Leone, rustic tropical beach, small wooden fishing boats, turquoise water, palm trees, untouched paradise, warm sunset" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&q=80&w=800",
         difficulty: "medium",
         xpReward: 30,
@@ -66,7 +66,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_loma_mountains",
         name: "Loma Mountains",
-        artPrompt: "Loma Mountains forest with mist rolling over green peaks" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Loma Mountains Sierra Leone, dense tropical rainforest, misty green peaks, jungle canopy, river flowing through, dramatic clouds" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&q=80&w=800",
         difficulty: "medium",
         xpReward: 30,
@@ -74,7 +74,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_mask_dance",
         name: "Traditional Dance",
-        artPrompt: "Traditional Sierra Leonean mask dance ceremony with vibrant costumes" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Sierra Leonean Sowei helmet mask, traditional Bundu society, intricate carving, dark wood with shells and fibers, ceremonial African art, vibrant warm lighting" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1504704911898-68304a7d2571?auto=format&fit=crop&q=80&w=800",
         difficulty: "hard",
         xpReward: 40,
@@ -82,7 +82,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_bureh_beach",
         name: "Bureh Beach",
-        artPrompt: "Bureh Beach at sunset with waves crashing on rocky shore and surfers" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Bureh Beach Sierra Leone, black sand beach, rustic wooden beach huts, surfers, palm trees, warm sunset, Atlantic ocean waves" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1505225051952-69b216aca661?auto=format&fit=crop&q=80&w=800",
         difficulty: "easy",
         xpReward: 20,
@@ -90,7 +90,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_outamba",
         name: "Outamba-Kilimi",
-        artPrompt: "Outamba-Kilimi National Park with elephants at a watering hole" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of Outamba-Kilimi National Park Sierra Leone, savanna meeting rainforest, elephants near river, hippos, lush green African wildlife, warm golden light" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&q=80&w=800",
         difficulty: "hard",
         xpReward: 40,
@@ -98,7 +98,7 @@ export const COUNTRIES: Country[] = [
       {
         id: "sl_diamond",
         name: "Diamond Mines",
-        artPrompt: "Sierra Leone diamond mining river with workers sifting through water" + AI_STYLE_SUFFIX,
+        artPrompt: "Rich painterly illustration of traditional alluvial diamond mining in Sierra Leone, red earth, wooden sieves, rural African workers, river setting, warm sunset" + AI_STYLE_SUFFIX,
         imageUrl: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?auto=format&fit=crop&q=80&w=800",
         difficulty: "medium",
         xpReward: 35,

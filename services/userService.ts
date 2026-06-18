@@ -18,7 +18,7 @@ export interface UserProfile {
   email: string;
   characterName: string;
   avatar: string;
-  avatarType?: "auto-generated" | "manual";
+  avatarType?: "auto-generated" | "manual" | "random";
   avatarData?: AvatarData;
   photoAnalyzed?: boolean;
   explorerNameLower?: string;
@@ -40,7 +40,7 @@ export const createUserProfile = async (
   characterName: string,
   avatar: string,
   extras?: {
-    avatarType?: "auto-generated" | "manual";
+    avatarType?: "auto-generated" | "manual" | "random";
     avatarData?: AvatarData;
     photoAnalyzed?: boolean;
   }

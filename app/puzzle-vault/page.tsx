@@ -112,6 +112,20 @@ function DifficultyBadge({ difficulty }: { difficulty: string }) {
   );
 }
 
+/* ───── Lock Icon ───── */
+function LockIcon({ unlocked }: { unlocked: boolean }) {
+  if (unlocked) return null;
+  return (
+    <div className="absolute inset-0 flex items-center justify-center z-10">
+      <div className="bg-black/60 backdrop-blur-sm rounded-full p-3">
+        <svg className="w-6 h-6 text-amber-200/70" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 export default function PuzzleVaultPage() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -136,6 +150,19 @@ export default function PuzzleVaultPage() {
     selectedCountry === "all"
       ? COUNTRIES
       : COUNTRIES.filter((c) => c.id === selectedCountry);
+
+  /**
+   * Determine if a puzzle is unlocked.
+   * Rule: first puzzle in each country is always unlocked.
+   * Others unlock sequentially after completing the previous one.
+   */
+  const isPuzzleUnlocked = (country: Country, puzzleIndex: number): boolean => {
+    if (puzzleIndex === 0) return true;
+    if (!profile) return false;
+    // Check if the previous puzzle in this country is completed
+    const prevPuzzle = country.puzzles[puzzleIndex - 1];
+    return profile.puzzlesCompleted.includes(prevPuzzle.id);
+  };
 
   if (loading) {
     return (
@@ -172,7 +199,7 @@ export default function PuzzleVaultPage() {
           />
         </div>
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-8">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-8">
           {/* Header */}
           <header
             className="flex items-center justify-between mb-10"
@@ -244,11 +271,8 @@ export default function PuzzleVaultPage() {
                     id: activePuzzle.id,
                     title: activePuzzle.name,
                     imageUrl: activePuzzle.imageUrl,
-                    category: "Country",
-                    difficulty: activePuzzle.difficulty,
                     location: activeCountry?.name || "",
                     description: activePuzzle.artPrompt,
-                    xpReward: activePuzzle.xpReward,
                   }}
                   onComplete={async () => {
                     if (user) {
@@ -326,76 +350,198 @@ export default function PuzzleVaultPage() {
                 </div>
 
                 {/* ── Country Sections ── */}
-                {filteredCountries.map((country, countryIndex) => (
-                  <div
-                    key={country.id}
-                    className="mb-12"
-                    style={{
-                      animation: `slide-up 0.5s ease-out ${countryIndex * 0.1}s both`,
-                    }}
-                  >
-                    {/* Country Header */}
-                    <div className="flex items-center gap-4 mb-5">
-                      <span className="text-4xl">{country.flag}</span>
-                      <div>
-                        <h2 className="text-xl font-bold font-[family-name:var(--font-cinzel)] text-amber-100/90">
-                          {country.name}
-                        </h2>
-                        <p className="text-xs text-amber-200/30">
-                          {country.description} · {country.puzzles.length} puzzles
-                        </p>
+                {filteredCountries.map((country, countryIndex) => {
+                  const completedCount = country.puzzles.filter((p) =>
+                    profile?.puzzlesCompleted.includes(p.id)
+                  ).length;
+
+                  return (
+                    <div
+                      key={country.id}
+                      className="mb-12"
+                      style={{
+                        animation: `slide-up 0.5s ease-out ${countryIndex * 0.1}s both`,
+                      }}
+                    >
+                      {/* Country Header */}
+                      <div className="flex items-center gap-4 mb-2">
+                        <span className="text-4xl">{country.flag}</span>
+                        <div>
+                          <h2 className="text-xl font-bold font-[family-name:var(--font-cinzel)] text-amber-100/90">
+                            {country.name}
+                          </h2>
+                          <p className="text-xs text-amber-200/30">
+                            {country.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Progress bar */}
+                      <div className="flex items-center gap-3 mb-5 ml-16">
+                        <div className="flex-1 max-w-xs h-1.5 bg-white/5 rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{
+                              width: `${(completedCount / country.puzzles.length) * 100}%`,
+                              background: `linear-gradient(90deg, ${country.color}, ${country.color}99)`,
+                            }}
+                          />
+                        </div>
+                        <span className="text-[10px] font-bold text-amber-200/40 uppercase tracking-wider">
+                          {completedCount}/{country.puzzles.length} puzzles
+                        </span>
+                      </div>
+
+                      {/* Puzzle Grid — 2 cols mobile, 3 cols tablet, 4 cols desktop */}
+                      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+                        {country.puzzles.map((puzzle, puzzleIndex) => {
+                          const isCompleted = profile?.puzzlesCompleted.includes(puzzle.id);
+                          const isUnlocked = isPuzzleUnlocked(country, puzzleIndex);
+
+                          return (
+                            <div
+                              key={puzzle.id}
+                              onClick={() => {
+                                if (!isUnlocked) return;
+                                setActivePuzzle({ ...puzzle, countryId: country.id });
+                                setActiveCountry(country);
+                              }}
+                              className={`group rounded-2xl overflow-hidden transition-all duration-400 ${
+                                isUnlocked
+                                  ? "cursor-pointer hover:-translate-y-2"
+                                  : "cursor-not-allowed opacity-50"
+                              }`}
+                              style={{
+                                background: "rgba(26,47,26,0.6)",
+                                backdropFilter: "blur(16px)",
+                                border: `1px solid ${
+                                  isCompleted
+                                    ? country.color + "40"
+                                    : isUnlocked
+                                      ? "rgba(212,165,116,0.15)"
+                                      : "rgba(255,255,255,0.03)"
+                                }`,
+                                animation: `card-reveal 0.6s ease-out ${Math.min(
+                                  puzzleIndex * 0.06,
+                                  0.5
+                                )}s both`,
+                                boxShadow: isCompleted
+                                  ? `0 0 20px ${country.color}15`
+                                  : "0 4px 30px rgba(0,0,0,0.2)",
+                              }}
+                              onMouseEnter={(e) => {
+                                if (!isUnlocked) return;
+                                e.currentTarget.style.borderColor = country.color + "60";
+                                e.currentTarget.style.boxShadow = `0 0 40px ${country.color}20, 0 8px 30px rgba(0,0,0,0.3)`;
+                              }}
+                              onMouseLeave={(e) => {
+                                e.currentTarget.style.borderColor = isCompleted
+                                  ? country.color + "40"
+                                  : isUnlocked
+                                    ? "rgba(212,165,116,0.15)"
+                                    : "rgba(255,255,255,0.03)";
+                                e.currentTarget.style.boxShadow = isCompleted
+                                  ? `0 0 20px ${country.color}15`
+                                  : "0 4px 30px rgba(0,0,0,0.2)";
+                              }}
+                            >
+                              {/* Image — 4:5 aspect ratio */}
+                              <div className="aspect-[4/5] relative overflow-hidden bg-black/30">
+                                <img
+                                  src={puzzle.imageUrl}
+                                  alt={puzzle.name}
+                                  className={`w-full h-full object-cover transition-transform duration-500 ${
+                                    isUnlocked ? "group-hover:scale-105" : "grayscale"
+                                  }`}
+                                  loading="lazy"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent" />
+
+                                {/* Lock overlay for locked puzzles */}
+                                <LockIcon unlocked={isUnlocked} />
+
+                                {/* Status badges */}
+                                <div className="absolute top-2 right-2">
+                                  {isCompleted ? (
+                                    <span className="badge-green text-[10px] py-0.5">
+                                      ✓ Done
+                                    </span>
+                                  ) : isUnlocked ? (
+                                    <DifficultyBadge difficulty={puzzle.difficulty} />
+                                  ) : (
+                                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-gray-800/80 text-gray-500 border border-gray-700/50">
+                                      🔒 Locked
+                                    </span>
+                                  )}
+                                </div>
+
+                                {/* XP reward badge */}
+                                {isUnlocked && (
+                                  <div className="absolute top-2 left-2">
+                                    <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                                      +{puzzle.xpReward} XP
+                                    </span>
+                                  </div>
+                                )}
+
+                                {/* Puzzle name — at bottom of card */}
+                                <div className="absolute bottom-0 left-0 right-0 p-3">
+                                  <h3
+                                    className={`text-sm font-bold leading-tight ${
+                                      isUnlocked
+                                        ? "text-white"
+                                        : "text-gray-500"
+                                    }`}
+                                  >
+                                    {puzzle.name}
+                                  </h3>
+                                  {isUnlocked && !isCompleted && (
+                                    <p className="text-[10px] text-amber-200/50 mt-1 font-medium">
+                                      Tap to play →
+                                    </p>
+                                  )}
+                                  {isCompleted && (
+                                    <p className="text-[10px] text-green-400/60 mt-1 font-medium">
+                                      Completed ✓
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
+                  );
+                })}
 
-                    {/* Puzzle Grid — 2 cols mobile, 3 cols tablet, 4 cols desktop */}
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                      {country.puzzles.map((puzzle, puzzleIndex) => {
-                        const isCompleted = profile?.puzzlesCompleted.includes(puzzle.id);
-                        return (
-                          <div
-                            key={puzzle.id}
-                            onClick={() => {
-                              setActivePuzzle({ ...puzzle, countryId: country.id });
-                              setActiveCountry(country);
-                            }}
-                            className="group cursor-pointer rounded-2xl overflow-hidden transition-all duration-400 hover:-translate-y-2"
-                            style={{
-                              background: "rgba(26,47,26,0.6)",
-                              backdropFilter: "blur(16px)",
-                              border: `1px solid ${isCompleted ? country.color + "40" : "rgba(212,165,116,0.1)"}`,
-                              animation: `card-reveal 0.6s ease-out ${Math.min(puzzleIndex * 0.06, 0.5)}s both`,
-                              boxShadow: isCompleted
-                                ? `0 0 20px ${country.color}15`
-                                : "0 4px 30px rgba(0,0,0,0.2)",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.borderColor = country.color + "60";
-                              e.currentTarget.style.boxShadow = `0 0 40px ${country.color}20, 0 8px 30px rgba(0,0,0,0.3)`;
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.borderColor = isCompleted
-                                ? country.color + "40"
-                                : "rgba(212,165,116,0.1)";
-                              e.currentTarget.style.boxShadow = isCompleted
-                                ? `0 0 20px ${country.color}15`
-                                : "0 4px 30px rgba(0,0,0,0.2)";
-                            }}
-                          >
-                            <div className="aspect-[4/3] relative overflow-hidden bg-black/30">
-                              <img
-                                src={puzzle.imageUrl}
-                                alt={puzzle.name}
-                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                loading="lazy"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                {/* ── Total Progress Summary ── */}
+                <div
+                  className="mt-8 text-center"
+                  style={{ animation: "slide-up 0.6s ease-out 0.5s both" }}
+                >
+                  <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/[0.03] border border-white/[0.06]">
+                    <span className="text-2xl">🧩</span>
+                    <div className="text-left">
+                      <p className="text-xs text-amber-200/40 font-medium uppercase tracking-wider">
+                        Total Progress
+                      </p>
+                      <p className="text-sm font-bold text-amber-100/80">
+                        {profile?.puzzlesCompleted.length || 0} /{" "}
+                        {COUNTRIES.reduce((sum, c) => sum + c.puzzles.length, 0)} puzzles completed
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </main>
+        </div>
 
-                              {/* Status badges */}
-                              <div className="absolute top-2 right-2">
-                                {isCompleted ? (
-                                  <span className="badge-green text-[10px] py-0.5">
-                                    ✓ Done
-                                  </span>
-                                ) : (
-                                  <DifficultyBadge difficulty={puzzle.difficulty} />
-                                )}
+        {showXPPopup !== null && (
+          <XPPopup amount={showXPPopup} onComplete={() => setShowXPPopup(null)} />
+        )}
+      </div>
+    </ProtectedRoute>
+  );
+}

@@ -534,7 +534,7 @@ function AvatarBuilder({
    MAIN ONBOARDING PAGE
    ═══════════════════════════════════════════ */
 
-type EssenceStep = "upload" | "analyzing" | "preview" | "builder";
+type EssenceStep = "upload" | "analyzing" | "preview" | "builder" | "random-preview";
 
 export default function OnboardingPage() {
   const { user } = useAuth();
@@ -557,7 +557,8 @@ export default function OnboardingPage() {
   const [photoDataUrl, setPhotoDataUrl] = useState<string | null>(null);
   const [detectedColors, setDetectedColors] = useState<DetectedColors | null>(null);
   const [analysisError, setAnalysisError] = useState(false);
-  const [avatarType, setAvatarType] = useState<"auto-generated" | "manual">("auto-generated");
+  const [avatarType, setAvatarType] = useState<"auto-generated" | "manual" | "random">("auto-generated");
+  const [avatarOrigin, setAvatarOrigin] = useState<"photo" | "random" | null>(null);
   const [avatarBuilder, setAvatarBuilder] = useState<AvatarState>({
     base: "pathfinder",
     hair: "windswept",
@@ -747,11 +748,55 @@ export default function OnboardingPage() {
   };
 
   const handleBuilderBack = () => {
-    if (detectedColors && photoDataUrl) {
+    if (avatarOrigin === "random") {
+      setEssenceStep("random-preview");
+    } else if (detectedColors && photoDataUrl) {
       setEssenceStep("preview");
     } else {
       handleChooseDifferentPhoto();
     }
+  };
+
+  /* ═══════════════════════════════════════════
+     RANDOM AVATAR GENERATION
+     ═══════════════════════════════════════════ */
+
+  const pickRandom = <T,>(arr: T[]): T => arr[Math.floor(Math.random() * arr.length)];
+
+  const generateRandomAvatar = () => {
+    const accessories = AVATAR_OPTIONS.Accessories;
+    const randomAccessories = accessories
+      .sort(() => Math.random() - 0.5)
+      .slice(0, Math.floor(Math.random() * 3)); // 0-2 accessories
+
+    const newAvatar: AvatarState = {
+      base: pickRandom(AVATAR_OPTIONS.Base),
+      hair: pickRandom(AVATAR_OPTIONS.Hair),
+      outfit: pickRandom(AVATAR_OPTIONS.Outfit),
+      accessory: randomAccessories.length > 0 ? randomAccessories[0] : "None",
+      frame: pickRandom(AVATAR_OPTIONS.Frame),
+    };
+
+    setAvatarBuilder(newAvatar);
+    setAvatarType("random");
+    setAvatarOrigin("random");
+    setDetectedColors(null);
+    setPhotoDataUrl(null);
+    setEssenceStep("random-preview");
+  };
+
+  const handleAcceptRandom = () => {
+    setAvatarType("random");
+    setStep(3);
+  };
+
+  const handleSummonAgain = () => {
+    generateRandomAvatar();
+  };
+
+  const handleRefineRandom = () => {
+    setAvatarType("manual");
+    setEssenceStep("builder");
   };
 
   /* ═══════════════════════════════════════════
@@ -852,12 +897,12 @@ export default function OnboardingPage() {
                 }}
               >
                 {step === 1 && "Choose Your Name"}
-                {step === 2 && "Forge Your Adventurer"}
+                {step === 2 && "Choose Your Identity"}
                 {step === 3 && "Enter the Realm"}
               </h1>
               <p className="text-sm mt-2" style={{ color: "#94a3b8" }}>
                 {step === 1 && "This is how the realm will know you"}
-                {step === 2 && "Upload your portrait and the realm will forge your explorer."}
+                {step === 2 && "How will you appear in the realm?"}
                 {step === 3 && "Your explorer is ready — begin your journey"}
               </p>
             </div>
@@ -989,47 +1034,95 @@ export default function OnboardingPage() {
               onClick={(e) => { (e.target as HTMLInputElement).value = ""; }}
             />
 
-            {/* ── UPLOAD STATE ── */}
+            {/* ── UPLOAD / CHOOSE STATE ── */}
             {step === 2 && essenceStep === "upload" && (
               <div className="space-y-5" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
-                <div className="flex justify-center">
+                {/* Two option cards — side by side on desktop, stacked on mobile */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Option 1: Forge from Photo */}
                   <button
                     type="button"
                     onClick={handleUploadClick}
-                    className="group relative w-52 h-52 sm:w-60 sm:h-60 rounded-full flex flex-col items-center justify-center gap-3 cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
                     style={{
-                      background: "rgba(255,255,255,0.05)",
-                      border: "2px solid rgba(255,255,255,0.15)",
-                      boxShadow: "0 0 40px rgba(168,85,247,0.1), inset 0 0 30px rgba(34,211,238,0.05)",
+                      background: "rgba(255,255,255,0.04)",
+                      border: "2px solid rgba(34,211,238,0.2)",
+                      boxShadow: "0 0 30px rgba(34,211,238,0.06), inset 0 0 20px rgba(34,211,238,0.03)",
                       touchAction: "manipulation",
                       WebkitTapHighlightColor: "transparent",
-                      minWidth: "44px",
                       minHeight: "44px",
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = "rgba(34,211,238,0.5)";
-                      e.currentTarget.style.boxShadow = "0 0 50px rgba(34,211,238,0.2), inset 0 0 30px rgba(34,211,238,0.08)";
+                      e.currentTarget.style.boxShadow = "0 0 40px rgba(34,211,238,0.15), inset 0 0 20px rgba(34,211,238,0.06)";
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.borderColor = "rgba(255,255,255,0.15)";
-                      e.currentTarget.style.boxShadow = "0 0 40px rgba(168,85,247,0.1), inset 0 0 30px rgba(34,211,238,0.05)";
+                      e.currentTarget.style.borderColor = "rgba(34,211,238,0.2)";
+                      e.currentTarget.style.boxShadow = "0 0 30px rgba(34,211,238,0.06), inset 0 0 20px rgba(34,211,238,0.03)";
                     }}
                   >
-                    <div
-                      className="text-5xl sm:text-6xl transition-transform duration-300 group-hover:scale-110"
-                      style={{
-                        filter: "drop-shadow(0 0 12px rgba(168,85,247,0.4))",
-                        animation: "float-gentle 4s ease-in-out infinite",
-                      }}
-                    >
-                      🔮
+                    <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: "rgba(34,211,238,0.1)", border: "1px solid rgba(34,211,238,0.25)" }}>
+                      <div
+                        className="text-4xl transition-transform duration-300 group-hover:scale-110"
+                        style={{ filter: "drop-shadow(0 0 10px rgba(34,211,238,0.4))" }}
+                      >
+                        🔮
+                      </div>
                     </div>
-                    <p className="text-sm font-medium" style={{ color: "#c4b5fd" }}>
-                      Tap to choose your portrait
-                    </p>
-                    <p className="text-xs" style={{ color: "#64748b" }}>
-                      Opens your gallery
-                    </p>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold" style={{ color: "#67e8f9" }}>
+                        Forge from Photo
+                      </p>
+                      <p className="text-xs mt-1" style={{ color: "#64748b" }}>
+                        Upload your portrait
+                      </p>
+                      <p className="text-[10px] mt-0.5" style={{ color: "#475569" }}>
+                        We'll capture your essence
+                      </p>
+                    </div>
+                  </button>
+
+                  {/* Option 2: Summon Random Explorer */}
+                  <button
+                    type="button"
+                    onClick={generateRandomAvatar}
+                    className="group relative flex flex-col items-center gap-3 p-6 rounded-2xl cursor-pointer transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      background: "rgba(255,255,255,0.04)",
+                      border: "2px solid rgba(168,85,247,0.2)",
+                      boxShadow: "0 0 30px rgba(168,85,247,0.06), inset 0 0 20px rgba(168,85,247,0.03)",
+                      touchAction: "manipulation",
+                      WebkitTapHighlightColor: "transparent",
+                      minHeight: "44px",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(168,85,247,0.5)";
+                      e.currentTarget.style.boxShadow = "0 0 40px rgba(168,85,247,0.15), inset 0 0 20px rgba(168,85,247,0.06)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = "rgba(168,85,247,0.2)";
+                      e.currentTarget.style.boxShadow = "0 0 30px rgba(168,85,247,0.06), inset 0 0 20px rgba(168,85,247,0.03)";
+                    }}
+                  >
+                    <div className="w-20 h-20 rounded-full flex items-center justify-center" style={{ background: "rgba(168,85,247,0.1)", border: "1px solid rgba(168,85,247,0.25)" }}>
+                      <div
+                        className="text-4xl transition-transform duration-300 group-hover:scale-110 group-hover:rotate-12"
+                        style={{ filter: "drop-shadow(0 0 10px rgba(168,85,247,0.4))" }}
+                      >
+                        🎲
+                      </div>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-semibold" style={{ color: "#c4b5fd" }}>
+                        Summon Random Explorer
+                      </p>
+                      <p className="text-xs mt-1" style={{ color: "#64748b" }}>
+                        Let fate decide your look
+                      </p>
+                      <p className="text-[10px] mt-0.5" style={{ color: "#475569" }}>
+                        No upload needed
+                      </p>
+                    </div>
                   </button>
                 </div>
 
@@ -1040,13 +1133,6 @@ export default function OnboardingPage() {
                 >
                   Back
                 </button>
-
-                <style jsx>{`
-                  @keyframes float-gentle {
-                    0%, 100% { transform: translateY(0); }
-                    50% { transform: translateY(-6px); }
-                  }
-                `}</style>
               </div>
             )}
 
@@ -1057,7 +1143,7 @@ export default function OnboardingPage() {
               </div>
             )}
 
-            {/* ── PREVIEW STATE ── */}
+            {/* ── PREVIEW STATE (Photo) ── */}
             {step === 2 && essenceStep === "preview" && (
               <div className="space-y-5" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
                 <div className="flex flex-col items-center gap-4">
@@ -1129,6 +1215,95 @@ export default function OnboardingPage() {
                     style={{ color: "#64748b" }}
                   >
                     Choose Different Photo
+                  </button>
+                </div>
+
+                <style jsx>{`
+                  @keyframes avatar-float {
+                    0%, 100% { transform: translateY(0); }
+                    50% { transform: translateY(-8px); }
+                  }
+                `}</style>
+              </div>
+            )}
+
+            {/* ── RANDOM PREVIEW STATE ── */}
+            {step === 2 && essenceStep === "random-preview" && (
+              <div className="space-y-5" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
+                <div className="flex flex-col items-center gap-4">
+                  <div style={{ animation: "avatar-float 3s ease-in-out infinite" }}>
+                    <GeneratedAvatar
+                      avatarData={{
+                        base: avatarBuilder.base,
+                        hair: avatarBuilder.hair,
+                        outfit: avatarBuilder.outfit,
+                        accessories: avatarBuilder.accessory !== "None" ? [avatarBuilder.accessory] : [],
+                        frame: avatarBuilder.frame,
+                      }}
+                      size={112}
+                    />
+                  </div>
+                  <p className="text-sm font-medium text-center" style={{ color: "#c4b5fd", textShadow: "0 0 20px rgba(168,85,247,0.3)" }}>
+                    The realm has summoned your explorer!
+                  </p>
+                </div>
+
+                {/* Chosen parts display */}
+                <div className="flex flex-wrap justify-center gap-2">
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                    {BASE_LABELS[avatarBuilder.base]}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                    {HAIR_LABELS[avatarBuilder.hair]}
+                  </span>
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                    {OUTFIT_LABELS[avatarBuilder.outfit]}
+                  </span>
+                  {avatarBuilder.accessory !== "None" && (
+                    <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                      {ACCESSORY_LABELS[avatarBuilder.accessory]}
+                    </span>
+                  )}
+                  <span className="px-2 py-0.5 rounded-full text-xs bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                    {FRAME_LABELS[avatarBuilder.frame]}
+                  </span>
+                </div>
+
+                <div className="space-y-3">
+                  <button
+                    type="button"
+                    onClick={handleAcceptRandom}
+                    className="w-full py-3 rounded-xl font-semibold text-white text-sm tracking-wide transition-all duration-300 hover:scale-[1.02] active:scale-[0.98]"
+                    style={{
+                      background: "linear-gradient(135deg, #9333ea, #06b6d4)",
+                      boxShadow: "0 0 24px rgba(147,51,234,0.3), 0 0 48px rgba(6,182,212,0.15)",
+                    }}
+                  >
+                    Accept This Explorer
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSummonAgain}
+                    className="w-full py-3 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/5"
+                    style={{
+                      color: "#c4b5fd",
+                      border: "1px solid rgba(168,85,247,0.3)",
+                    }}
+                  >
+                    🎲 Summon Again
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleRefineRandom}
+                    className="w-full py-3 rounded-xl text-sm font-medium transition-all duration-300 hover:bg-white/5"
+                    style={{
+                      color: "#94a3b8",
+                      border: "1px solid rgba(255,255,255,0.12)",
+                    }}
+                  >
+                    Refine Manually
                   </button>
                 </div>
 
@@ -1225,7 +1400,9 @@ export default function OnboardingPage() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (photoDataUrl && detectedColors) {
+                      if (avatarOrigin === "random") {
+                        setEssenceStep("random-preview");
+                      } else if (photoDataUrl && detectedColors) {
                         setEssenceStep("preview");
                       } else if (photoDataUrl) {
                         setEssenceStep("builder");
