@@ -34,11 +34,11 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#070b14] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#0d0b1a] px-4">
       {/* Background effects */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] bg-blue-600/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/3 right-1/3 w-[400px] h-[400px] bg-purple-600/5 rounded-full blur-[150px]" />
+      <div className="fixed inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-1/3 left-1/3 w-[500px] h-[500px] rounded-full blur-[200px]" style={{ background: "rgba(168,85,247,0.04)" }} />
+        <div className="absolute bottom-1/3 right-1/3 w-[400px] h-[400px] rounded-full blur-[180px]" style={{ background: "rgba(34,211,238,0.03)" }} />
       </div>
 
       <div className="relative z-10 w-full max-w-md">
@@ -51,19 +51,34 @@ export default function LoginPage() {
         </Link>
 
         {/* Card */}
-        <div className="card-base p-8" style={{ animation: 'scale-in 0.5s ease-out' }}>
+        <div
+          className="rounded-2xl p-8"
+          style={{
+            animation: "scale-in 0.5s ease-out",
+            background: "rgba(26,22,37,0.7)",
+            backdropFilter: "blur(24px)",
+            border: "1px solid rgba(168,85,247,0.12)",
+            boxShadow: "0 0 60px rgba(168,85,247,0.05)",
+          }}
+        >
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-14 h-14 rounded-2xl bg-blue-600/20 border border-blue-500/30 flex items-center justify-center text-2xl mx-auto mb-4">
+            <div
+              className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-4"
+              style={{
+                background: "linear-gradient(135deg, rgba(168,85,247,0.2), rgba(34,211,238,0.2))",
+                border: "1px solid rgba(168,85,247,0.25)",
+              }}
+            >
               🌍
             </div>
-            <h1 className="text-2xl font-bold">Welcome back</h1>
+            <h1 className="text-2xl font-bold font-[family-name:var(--font-cinzel)]">Welcome back</h1>
             <p className="text-sm text-gray-500 mt-1">Sign in to continue your quest</p>
           </div>
 
           {/* Error */}
           {error && (
-            <div className="mb-6 p-4 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-400 text-sm text-center">
+            <div className="mb-6 p-4 rounded-xl text-sm text-center" style={{ background: "rgba(244,63,94,0.1)", border: "1px solid rgba(244,63,94,0.2)", color: "#f43f5e" }}>
               {error}
             </div>
           )}
@@ -111,7 +126,7 @@ export default function LoginPage() {
           {/* Footer */}
           <p className="mt-6 text-center text-sm text-gray-500">
             Don't have an account?{" "}
-            <Link href="/auth/signup" className="text-blue-400 hover:text-blue-300 font-medium transition-colors">
+            <Link href="/auth/signup" className="text-purple-400 hover:text-purple-300 font-medium transition-colors">
               Create one
             </Link>
           </p>
