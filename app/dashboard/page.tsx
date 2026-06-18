@@ -7,6 +7,7 @@ import { checkAndUpdateStreak } from "@/services/streakService";
 import { LEVEL_THRESHOLDS, calculateLevel } from "@/services/xpService";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import SettingsPanel from "@/components/SettingsPanel";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";
 import { signOut } from "firebase/auth";
@@ -146,8 +147,13 @@ export default function DashboardPage() {
                           padding: "3px",
                         }}
                       >
-                        <div className="w-full h-full rounded-full bg-[#1a1625] flex items-center justify-center">
-                          {profile.avatar}
+                        <div className="w-full h-full rounded-full bg-[#1a1625] overflow-hidden">
+                          <AvatarDisplay
+                            avatar={profile.avatar || ""}
+                            avatarData={profile.avatarData}
+                            fallbackName={profile.characterName}
+                            size={112}
+                          />
                         </div>
                       </div>
                       {/* Level badge */}

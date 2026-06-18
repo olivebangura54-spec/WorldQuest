@@ -1,11 +1,28 @@
 import { db } from "@/lib/firebase";
-import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs, where } from "firebase/firestore";
+
+export interface AvatarData {
+  base: string;
+  face?: string;
+  hair?: string;
+  outfit?: string;
+  accessories?: string[];
+  frame?: string;
+  photoUrl?: string;
+  detectedHair?: string;
+  detectedSkin?: string;
+  detectedEyes?: string;
+}
 
 export interface UserProfile {
   uid: string;
   email: string;
   characterName: string;
   avatar: string;
+  avatarType?: "auto-generated" | "manual";
+  avatarData?: AvatarData;
+  photoAnalyzed?: boolean;
+  explorerNameLower?: string;
   level: number;
   xp: number;
   title: string;
@@ -18,13 +35,27 @@ export interface UserProfile {
   createdAt: string;
 }
 
-export const createUserProfile = async (uid: string, email: string, characterName: string, avatar: string) => {
+export const createUserProfile = async (
+  uid: string,
+  email: string,
+  characterName: string,
+  avatar: string,
+  extras?: {
+    avatarType?: "auto-generated" | "manual";
+    avatarData?: AvatarData;
+    photoAnalyzed?: boolean;
+  }
+) => {
   const userRef = doc(db, "users", uid);
   const profile: UserProfile = {
     uid,
     email,
     characterName,
     avatar,
+    avatarType: extras?.avatarType,
+    avatarData: extras?.avatarData,
+    photoAnalyzed: extras?.photoAnalyzed,
+    explorerNameLower: characterName.toLowerCase(),
     level: 1,
     xp: 0,
     title: "Explorer",
@@ -49,6 +80,13 @@ export const getUserProfile = async (uid: string) => {
   } else {
     return null;
   }
+};
+
+export const checkExplorerNameUnique = async (name: string): Promise<boolean> => {
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, where("explorerNameLower", "==", name.toLowerCase()));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.empty;
 };
 
 export const getTopUsers = async (count: number = 10) => {

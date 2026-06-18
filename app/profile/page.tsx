@@ -6,6 +6,7 @@ import { getUserProfile, UserProfile } from "@/services/userService";
 import { ACHIEVEMENTS } from "@/services/achievementService";
 import { CHAPTERS } from "@/services/chapterService";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import Link from "next/link";
 
 export default function ProfilePage() {
@@ -67,8 +68,13 @@ export default function ProfilePage() {
                       padding: "3px",
                     }}
                   >
-                    <div className="w-full h-full rounded-full bg-[#1a1625] flex items-center justify-center">
-                      {profile.avatar}
+                    <div className="w-full h-full rounded-full bg-[#1a1625] overflow-hidden">
+                      <AvatarDisplay
+                        avatar={profile.avatar || ""}
+                        avatarData={profile.avatarData}
+                        fallbackName={profile.characterName}
+                        size={112}
+                      />
                     </div>
                   </div>
                   <div

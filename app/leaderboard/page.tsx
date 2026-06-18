@@ -4,6 +4,7 @@ import { useEffect, useState, useCallback } from "react";
 import { getTopUsers, UserProfile } from "@/services/userService";
 import { useAuth } from "@/context/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import AvatarDisplay from "@/components/AvatarDisplay";
 import Link from "next/link";
 
 /* ───── Animated Counter ───── */
@@ -236,8 +237,13 @@ export default function LeaderboardPage() {
                             padding: "2px",
                           }}
                         >
-                          <div className="w-full h-full rounded-full bg-[#1a1625] flex items-center justify-center text-2xl">
-                            {user.avatar}
+                          <div className="w-full h-full rounded-full bg-[#1a1625] overflow-hidden">
+                            <AvatarDisplay
+                              avatar={user.avatar || ""}
+                              avatarData={user.avatarData}
+                              fallbackName={user.characterName}
+                              size={64}
+                            />
                           </div>
                         </div>
                       </div>
@@ -307,8 +313,14 @@ export default function LeaderboardPage() {
                       </div>
 
                       {/* Avatar */}
-                      <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center text-lg shrink-0">
-                        {u.avatar}
+                      <div className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.06] overflow-hidden shrink-0">
+                        <AvatarDisplay
+                          avatar={u.avatar || ""}
+                          avatarData={u.avatarData}
+                          fallbackName={u.characterName}
+                          size={40}
+                          showFrame={false}
+                        />
                       </div>
 
                       {/* Name */}
