@@ -6,33 +6,79 @@ import { useRouter } from "next/navigation";
 import { createUserProfile, checkExplorerNameUnique } from "@/services/userService";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import EnchantedForestBackground from "@/components/EnchantedForestBackground";
+import GeneratedAvatar from "@/components/GeneratedAvatar";
 
 /* ═══════════════════════════════════════════
    CONSTANTS
    ═══════════════════════════════════════════ */
 
-const EMOJI_AVATARS = ["🚀", "🛡️", "🧙", "🏹", "🌊", "🔥", "🌿", "💎"];
+const ADVENTURE_BASES = [
+  { id: "pathfinder", label: "Pathfinder", desc: "Rugged explorer with compass" },
+  { id: "treasure_hunter", label: "Treasure Hunter", desc: "Hat, map, satchel" },
+  { id: "mountain_scout", label: "Mountain Scout", desc: "Cloak, boots, climbing gear" },
+  { id: "mystic_navigator", label: "Mystic Navigator", desc: "Robes, star chart, crystal lens" },
+  { id: "jungle_ranger", label: "Jungle Ranger", desc: "Camouflage, machete, tribal accents" },
+];
 
-const AVATAR_TABS = ["Base", "Face", "Hair", "Outfit", "Accessories", "Frame"] as const;
+const AVATAR_TABS = ["Base", "Hair", "Outfit", "Accessories", "Frame"] as const;
 
 const AVATAR_OPTIONS: Record<string, string[]> = {
-  Base: ["🧑", "👩", "🧑‍🦰", "👨‍🦱", "🧔", "👱", "🧑‍🦳", "👩‍🦲"],
-  Face: ["😊", "😎", "🧐", "🤔", "😤", "😴", "🤩", "😈"],
-  Hair: ["None", "Short", "Long", "Curly", "Ponytail", "Braids", "Mohawk", "Bald"],
-  Outfit: ["Tunic", "Armor", "Robe", "Cloak", "Leather", "Chainmail", "Plate", "Mystic"],
-  Accessories: ["None", "Glasses", "Crown", "Helm", "Earring", "Scarf", "Cape", "Amulet"],
-  Frame: ["None", "Wood", "Crystal", "Fire", "Ice", "Nature", "Shadow", "Light"],
+  Base: ["pathfinder", "treasure_hunter", "mountain_scout", "mystic_navigator", "jungle_ranger"],
+  Hair: ["windswept", "braided", "bandana", "hooded", "bald_tattoos"],
+  Outfit: ["leather", "cloak", "vest", "robes", "camo"],
+  Accessories: ["hat", "compass", "goggles", "rope", "lantern", "backpack", "dagger", "journal"],
+  Frame: ["compass", "map", "rope", "crystal", "leaf"],
+};
+
+const BASE_LABELS: Record<string, string> = {
+  pathfinder: "Pathfinder",
+  treasure_hunter: "Treasure Hunter",
+  mountain_scout: "Mountain Scout",
+  mystic_navigator: "Mystic Navigator",
+  jungle_ranger: "Jungle Ranger",
+};
+
+const HAIR_LABELS: Record<string, string> = {
+  windswept: "Windswept",
+  braided: "Braided",
+  bandana: "Bandana",
+  hooded: "Hooded",
+  bald_tattoos: "Bald & Tattoos",
+};
+
+const OUTFIT_LABELS: Record<string, string> = {
+  leather: "Leather Jacket",
+  cloak: "Cloak",
+  vest: "Vest + Harness",
+  robes: "Mystic Robes",
+  camo: "Camouflage",
+};
+
+const ACCESSORY_LABELS: Record<string, string> = {
+  hat: "Explorer Hat",
+  compass: "Compass Necklace",
+  goggles: "Goggles",
+  rope: "Rope Coil",
+  lantern: "Crystal Lantern",
+  backpack: "Backpack",
+  dagger: "Dagger",
+  journal: "Journal",
+};
+
+const FRAME_LABELS: Record<string, string> = {
+  compass: "Compass Rose",
+  map: "Map Scroll",
+  rope: "Rope Knot",
+  crystal: "Crystal",
+  leaf: "Jungle Leaf",
 };
 
 const FRAME_STYLES: Record<string, string> = {
-  None: "",
-  Wood: "border-amber-700 border-4",
-  Crystal: "border-cyan-400 border-2 shadow-[0_0_12px_rgba(34,211,238,0.4)]",
-  Fire: "border-orange-500 border-2 shadow-[0_0_12px_rgba(249,115,22,0.4)]",
-  Ice: "border-blue-300 border-2 shadow-[0_0_12px_rgba(147,197,253,0.4)]",
-  Nature: "border-green-500 border-2 shadow-[0_0_12px_rgba(34,197,94,0.4)]",
-  Shadow: "border-purple-800 border-2 shadow-[0_0_12px_rgba(88,28,135,0.4)]",
-  Light: "border-yellow-300 border-2 shadow-[0_0_16px_rgba(253,224,71,0.5)]",
+  compass: "border-amber-700 border-4",
+  map: "border-amber-600 border-2 shadow-[0_0_12px_rgba(212,165,116,0.3)]",
+  rope: "border-amber-800 border-2 shadow-[0_0_12px_rgba(139,115,85,0.3)]",
+  crystal: "border-cyan-400 border-2 shadow-[0_0_12px_rgba(34,211,238,0.4)]",
+  leaf: "border-green-500 border-2 shadow-[0_0_12px_rgba(34,197,94,0.4)]",
 };
 
 /* ═══════════════════════════════════════════
@@ -195,16 +241,17 @@ function extractColorsFromPhoto(imageUrl: string): Promise<DetectedColors> {
         );
         const eyes = rgbToLabel(er, eg, eb, EYE_COLOR_MAP);
 
-        // Determine base character archetype
+        // Determine adventure base character from color analysis
         const brightness = (sr * 0.299 + sg * 0.587 + sb * 0.114) / 255;
         const warmth = (sr - sb) / 255;
         const contrast = Math.abs(hr - sr) + Math.abs(hg - sg) + Math.abs(hb - sb);
 
-        let base = "🧑";
-        if (contrast > 150 && brightness < 0.5) base = "🛡️";       // warrior
-        else if (brightness > 0.6 && warmth < 0.1) base = "🧙";    // mage (cool)
-        else if (warmth > 0.15) base = "🏹";                        // ranger (warm)
-        else base = "🧑‍🦱";                                          // scholar (soft)
+        let base = "pathfinder";
+        if (warmth > 0.15) base = "treasure_hunter";          // warm → golden, desert
+        else if (warmth < 0.05 && brightness > 0.5) base = "mystic_navigator"; // cool → blue, starry
+        else if (contrast > 150) base = "jungle_ranger";       // high contrast → bold
+        else if (brightness < 0.4) base = "mountain_scout";    // soft → earthy
+        else base = "pathfinder";                               // neutral → balanced
 
         resolve({ hair, skin, eyes, base });
       } catch (err) {
@@ -273,7 +320,7 @@ function EssenceSpinner() {
           className="text-sm font-medium"
           style={{ color: "#c4b5fd", textShadow: "0 0 20px rgba(168,85,247,0.4)" }}
         >
-          The realm is reading your essence...
+          The realm is forging your adventurer...
         </p>
         <div className="flex justify-center gap-1.5 mt-3">
           {[0, 1, 2].map((i) => (
@@ -338,11 +385,19 @@ function ColorTag({ label, color }: { label: string; color: string }) {
 
 interface AvatarState {
   base: string;
-  face: string;
   hair: string;
   outfit: string;
   accessory: string;
   frame: string;
+}
+
+function getLabelForOption(tab: string, value: string): string {
+  if (tab === "Base") return BASE_LABELS[value] || value;
+  if (tab === "Hair") return HAIR_LABELS[value] || value;
+  if (tab === "Outfit") return OUTFIT_LABELS[value] || value;
+  if (tab === "Accessories") return ACCESSORY_LABELS[value] || value;
+  if (tab === "Frame") return FRAME_LABELS[value] || value;
+  return value;
 }
 
 function AvatarBuilder({
@@ -360,7 +415,6 @@ function AvatarBuilder({
 
   const tabMap: Record<string, keyof AvatarState> = {
     Base: "base",
-    Face: "face",
     Hair: "hair",
     Outfit: "outfit",
     Accessories: "accessory",
@@ -372,27 +426,31 @@ function AvatarBuilder({
   };
 
   const handleRandomize = () => {
+    const accessories = AVATAR_OPTIONS.Accessories;
     setAvatar({
-      base: EMOJI_AVATARS[Math.floor(Math.random() * EMOJI_AVATARS.length)],
-      face: AVATAR_OPTIONS.Face[Math.floor(Math.random() * AVATAR_OPTIONS.Face.length)],
+      base: AVATAR_OPTIONS.Base[Math.floor(Math.random() * AVATAR_OPTIONS.Base.length)],
       hair: AVATAR_OPTIONS.Hair[Math.floor(Math.random() * AVATAR_OPTIONS.Hair.length)],
       outfit: AVATAR_OPTIONS.Outfit[Math.floor(Math.random() * AVATAR_OPTIONS.Outfit.length)],
-      accessory: AVATAR_OPTIONS.Accessories[Math.floor(Math.random() * AVATAR_OPTIONS.Accessories.length)],
+      accessory: accessories[Math.floor(Math.random() * accessories.length)],
       frame: AVATAR_OPTIONS.Frame[Math.floor(Math.random() * AVATAR_OPTIONS.Frame.length)],
     });
   };
 
-  const frameStyle = FRAME_STYLES[avatar.frame] || "";
-
   return (
     <div className="space-y-5">
-      {/* Preview */}
+      {/* Preview — render SVG adventure avatar */}
       <div className="flex justify-center">
-        <div
-          className={`w-24 h-24 rounded-full flex items-center justify-center text-5xl bg-white/5 ${frameStyle}`}
-          style={{ border: frameStyle ? undefined : "2px solid rgba(255,255,255,0.15)" }}
-        >
-          {avatar.base}
+        <div style={{ animation: "avatar-float 3s ease-in-out infinite" }}>
+          <GeneratedAvatar
+            avatarData={{
+              base: avatar.base,
+              hair: avatar.hair,
+              outfit: avatar.outfit,
+              accessories: avatar.accessory !== "None" ? [avatar.accessory] : [],
+              frame: avatar.frame,
+            }}
+            size={96}
+          />
         </div>
       </div>
 
@@ -424,13 +482,13 @@ function AvatarBuilder({
               key={option}
               type="button"
               onClick={() => handleSelect(option)}
-              className={`py-2.5 rounded-xl text-sm transition-all duration-200 ${
+              className={`py-2.5 rounded-xl text-xs font-medium transition-all duration-200 ${
                 isSelected
                   ? "bg-purple-500/25 border border-purple-400/50 text-white shadow-[0_0_12px_rgba(168,85,247,0.2)]"
                   : "bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:border-white/20"
               }`}
             >
-              {option}
+              {getLabelForOption(activeTab, option)}
             </button>
           );
         })}
@@ -461,6 +519,13 @@ function AvatarBuilder({
           Save Avatar
         </button>
       </div>
+
+      <style jsx>{`
+        @keyframes avatar-float {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-8px); }
+        }
+      `}</style>
     </div>
   );
 }
@@ -494,12 +559,11 @@ export default function OnboardingPage() {
   const [analysisError, setAnalysisError] = useState(false);
   const [avatarType, setAvatarType] = useState<"auto-generated" | "manual">("auto-generated");
   const [avatarBuilder, setAvatarBuilder] = useState<AvatarState>({
-    base: "🧑",
-    face: "😊",
-    hair: "Short",
-    outfit: "Tunic",
-    accessory: "None",
-    frame: "None",
+    base: "pathfinder",
+    hair: "windswept",
+    outfit: "leather",
+    accessory: "compass",
+    frame: "compass",
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -592,29 +656,26 @@ export default function OnboardingPage() {
     setAnalysisError(false);
 
     try {
-      // Simulate minimum delay for magical feel
       const [colors] = await Promise.all([
         extractColorsFromPhoto(imageUrl),
         new Promise((resolve) => setTimeout(resolve, 2500)),
       ]);
 
-      // Map detected colors to avatar builder options
       const hairOption = mapHairLabelToOption(colors.hair.label);
       const outfitOption = mapBaseToOutfit(colors.base);
+      const accessoryOption = mapBaseToAccessory(colors.base);
 
       setDetectedColors(colors);
       setAvatarBuilder({
         base: colors.base,
-        face: "😊",
         hair: hairOption,
         outfit: outfitOption,
-        accessory: "None",
-        frame: "Crystal",
+        accessory: accessoryOption,
+        frame: "compass",
       });
       setAvatarType("auto-generated");
       setEssenceStep("preview");
     } catch {
-      // Fallback — analysis failed
       setAnalysisError(true);
       setDetectedColors(null);
       setAvatarType("manual");
@@ -624,20 +685,31 @@ export default function OnboardingPage() {
 
   const mapHairLabelToOption = (label: string): string => {
     const lower = label.toLowerCase();
-    if (lower.includes("black") || lower.includes("dark")) return "Short";
-    if (lower.includes("brown") || lower.includes("chestnut") || lower.includes("auburn")) return "Short";
-    if (lower.includes("blonde") || lower.includes("platinum")) return "Long";
-    if (lower.includes("red") || lower.includes("copper")) return "Curly";
-    if (lower.includes("silver") || lower.includes("white")) return "Bald";
-    return "Short";
+    if (lower.includes("black") || lower.includes("dark")) return "bandana";
+    if (lower.includes("brown") || lower.includes("chestnut") || lower.includes("auburn")) return "braided";
+    if (lower.includes("blonde") || lower.includes("platinum")) return "windswept";
+    if (lower.includes("red") || lower.includes("copper")) return "windswept";
+    if (lower.includes("silver") || lower.includes("white")) return "bald_tattoos";
+    return "windswept";
   };
 
   const mapBaseToOutfit = (base: string): string => {
     switch (base) {
-      case "🛡️": return "Armor";
-      case "🧙": return "Robe";
-      case "🏹": return "Leather";
-      default: return "Tunic";
+      case "treasure_hunter": return "leather";
+      case "mystic_navigator": return "robes";
+      case "mountain_scout": return "cloak";
+      case "jungle_ranger": return "camo";
+      default: return "leather";
+    }
+  };
+
+  const mapBaseToAccessory = (base: string): string => {
+    switch (base) {
+      case "treasure_hunter": return "hat";
+      case "mystic_navigator": return "compass";
+      case "mountain_scout": return "rope";
+      case "jungle_ranger": return "dagger";
+      default: return "compass";
     }
   };
 
@@ -648,7 +720,6 @@ export default function OnboardingPage() {
   const handleFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) handleFileSelect(file);
-    // Reset input so same file can be selected again
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -695,11 +766,9 @@ export default function OnboardingPage() {
     setLoading(true);
     setError(null);
     try {
-      // Always save the generated emoji avatar — NEVER the raw photo
       const avatarDisplay = avatarBuilder.base;
       const avatarData = {
         base: avatarBuilder.base,
-        face: avatarBuilder.face,
         hair: avatarBuilder.hair,
         outfit: avatarBuilder.outfit,
         accessories: avatarBuilder.accessory !== "None" ? [avatarBuilder.accessory] : [],
@@ -734,8 +803,6 @@ export default function OnboardingPage() {
       default: return "border-white/20";
     }
   };
-
-  const frameStyle = FRAME_STYLES[avatarBuilder.frame] || "";
 
   return (
     <ProtectedRoute>
@@ -785,12 +852,12 @@ export default function OnboardingPage() {
                 }}
               >
                 {step === 1 && "Choose Your Name"}
-                {step === 2 && "Capture Your Essence"}
+                {step === 2 && "Forge Your Adventurer"}
                 {step === 3 && "Enter the Realm"}
               </h1>
               <p className="text-sm mt-2" style={{ color: "#94a3b8" }}>
                 {step === 1 && "This is how the realm will know you"}
-                {step === 2 && "Upload your portrait and the realm will forge your likeness."}
+                {step === 2 && "Upload your portrait and the realm will forge your explorer."}
                 {step === 3 && "Your explorer is ready — begin your journey"}
               </p>
             </div>
@@ -814,7 +881,6 @@ export default function OnboardingPage() {
                ═══════════════════════════════════ */}
             {step === 1 && (
               <div className="space-y-4" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
-                {/* Name input */}
                 <div>
                   <div className="relative">
                     <input
@@ -875,7 +941,6 @@ export default function OnboardingPage() {
                   )}
                 </div>
 
-                {/* Suggestions */}
                 {!nameChecking && nameChecked && nameAvailable === false && suggestions.length > 0 && (
                   <div style={{ animation: "stagger-fade-in 0.3s ease-out both" }}>
                     <p className="text-xs text-slate-400 mb-2">Try one of these:</p>
@@ -894,7 +959,6 @@ export default function OnboardingPage() {
                   </div>
                 )}
 
-                {/* Proceed button */}
                 <button
                   type="button"
                   disabled={!canProceedStep1}
@@ -913,10 +977,9 @@ export default function OnboardingPage() {
             )}
 
             {/* ═══════════════════════════════════
-               STEP 2: CAPTURE YOUR ESSENCE
+               STEP 2: FORGE YOUR ADVENTURER
                ═══════════════════════════════════ */}
 
-            {/* Hidden file input */}
             <input
               ref={fileInputRef}
               type="file"
@@ -929,7 +992,6 @@ export default function OnboardingPage() {
             {/* ── UPLOAD STATE ── */}
             {step === 2 && essenceStep === "upload" && (
               <div className="space-y-5" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
-                {/* Upload zone — mystical mirror / crystal ball */}
                 <div className="flex justify-center">
                   <button
                     type="button"
@@ -953,7 +1015,6 @@ export default function OnboardingPage() {
                       e.currentTarget.style.boxShadow = "0 0 40px rgba(168,85,247,0.1), inset 0 0 30px rgba(34,211,238,0.05)";
                     }}
                   >
-                    {/* Crystal ball icon */}
                     <div
                       className="text-5xl sm:text-6xl transition-transform duration-300 group-hover:scale-110"
                       style={{
@@ -972,7 +1033,6 @@ export default function OnboardingPage() {
                   </button>
                 </div>
 
-                {/* Back button */}
                 <button
                   type="button"
                   onClick={() => setStep(1)}
@@ -1000,24 +1060,27 @@ export default function OnboardingPage() {
             {/* ── PREVIEW STATE ── */}
             {step === 2 && essenceStep === "preview" && (
               <div className="space-y-5" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
-                {/* Auto-generated avatar preview */}
                 <div className="flex flex-col items-center gap-4">
-                  <div
-                    className={`w-28 h-28 rounded-full flex items-center justify-center text-6xl bg-white/5 ${frameStyle}`}
-                    style={{
-                      border: frameStyle ? undefined : "2px solid rgba(255,255,255,0.15)",
-                      boxShadow: "0 0 30px rgba(168,85,247,0.2), 0 0 60px rgba(34,211,238,0.1)",
-                      animation: "avatar-float 3s ease-in-out infinite",
-                    }}
-                  >
-                    {avatarBuilder.base}
+                  <div style={{ animation: "avatar-float 3s ease-in-out infinite" }}>
+                    <GeneratedAvatar
+                      avatarData={{
+                        base: avatarBuilder.base,
+                        hair: avatarBuilder.hair,
+                        outfit: avatarBuilder.outfit,
+                        accessories: avatarBuilder.accessory !== "None" ? [avatarBuilder.accessory] : [],
+                        frame: avatarBuilder.frame,
+                        detectedHair: detectedColors?.hair.label,
+                        detectedSkin: detectedColors?.skin.label,
+                        detectedEyes: detectedColors?.eyes.label,
+                      }}
+                      size={112}
+                    />
                   </div>
                   <p className="text-sm font-medium" style={{ color: "#c4b5fd", textShadow: "0 0 20px rgba(168,85,247,0.3)" }}>
-                    The realm has captured your essence.
+                    The realm has forged your adventurer.
                   </p>
                 </div>
 
-                {/* Color tags */}
                 {detectedColors && (
                   <div className="flex flex-wrap justify-center gap-2">
                     <ColorTag label={`Hair: ${detectedColors.hair.label}`} color={detectedColors.hair.color} />
@@ -1026,7 +1089,6 @@ export default function OnboardingPage() {
                   </div>
                 )}
 
-                {/* Photo thumbnail */}
                 {photoDataUrl && (
                   <div className="flex justify-center">
                     <div className="w-12 h-12 rounded-full overflow-hidden border border-white/15 opacity-60">
@@ -1035,9 +1097,7 @@ export default function OnboardingPage() {
                   </div>
                 )}
 
-                {/* Action buttons — stacked */}
                 <div className="space-y-3">
-                  {/* Accept & Continue — primary */}
                   <button
                     type="button"
                     onClick={handleAcceptPreview}
@@ -1046,17 +1106,10 @@ export default function OnboardingPage() {
                       background: "linear-gradient(135deg, #9333ea, #06b6d4)",
                       boxShadow: "0 0 24px rgba(147,51,234,0.3), 0 0 48px rgba(6,182,212,0.15)",
                     }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.boxShadow = "0 0 32px rgba(147,51,234,0.5), 0 0 64px rgba(6,182,212,0.25)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.boxShadow = "0 0 24px rgba(147,51,234,0.3), 0 0 48px rgba(6,182,212,0.15)";
-                    }}
                   >
                     Accept & Continue
                   </button>
 
-                  {/* Refine Manually — secondary ghost */}
                   <button
                     type="button"
                     onClick={handleRefineManually}
@@ -1069,7 +1122,6 @@ export default function OnboardingPage() {
                     Refine Manually
                   </button>
 
-                  {/* Choose Different Photo — subtle link */}
                   <button
                     type="button"
                     onClick={handleChooseDifferentPhoto}
@@ -1118,7 +1170,6 @@ export default function OnboardingPage() {
                ═══════════════════════════════════ */}
             {step === 3 && (
               <div className="space-y-6" style={{ animation: "stagger-fade-in 0.5s ease-out both" }}>
-                {/* Summary card */}
                 <div
                   className="p-5 rounded-2xl text-center"
                   style={{
@@ -1126,37 +1177,41 @@ export default function OnboardingPage() {
                     border: "1px solid rgba(255,255,255,0.12)",
                   }}
                 >
-                  {/* Avatar preview — always show generated avatar, NEVER raw photo */}
-                  <div className="mb-4">
-                    <div
-                      className={`w-20 h-20 rounded-full mx-auto flex items-center justify-center text-4xl bg-white/5 ${FRAME_STYLES[avatarBuilder.frame] || ""}`}
-                      style={{
-                        border: FRAME_STYLES[avatarBuilder.frame] ? undefined : "2px solid rgba(255,255,255,0.15)",
-                        boxShadow: FRAME_STYLES[avatarBuilder.frame]?.includes("shadow") ? undefined : "0 0 20px rgba(168,85,247,0.2)",
+                  <div className="mb-4 flex justify-center">
+                    <GeneratedAvatar
+                      avatarData={{
+                        base: avatarBuilder.base,
+                        hair: avatarBuilder.hair,
+                        outfit: avatarBuilder.outfit,
+                        accessories: avatarBuilder.accessory !== "None" ? [avatarBuilder.accessory] : [],
+                        frame: avatarBuilder.frame,
+                        detectedHair: detectedColors?.hair.label,
+                        detectedSkin: detectedColors?.skin.label,
+                        detectedEyes: detectedColors?.eyes.label,
                       }}
-                    >
-                      {avatarBuilder.base}
-                    </div>
+                      size={80}
+                    />
                   </div>
 
-                  {/* Explorer name */}
                   <h2 className="text-xl font-bold text-white font-[family-name:var(--font-cinzel)]">
                     {name.trim()}
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">Explorer</p>
 
-                  {/* Avatar details */}
                   <div className="mt-3 flex flex-wrap justify-center gap-2">
-                    {[avatarBuilder.face, avatarBuilder.hair, avatarBuilder.outfit, avatarBuilder.accessory, avatarBuilder.frame]
-                      .filter((v) => v !== "None")
-                      .map((v) => (
-                        <span key={v} className="px-2 py-0.5 rounded-full text-xs bg-white/5 text-slate-400 border border-white/10">
-                          {v}
-                        </span>
-                      ))}
+                    {[
+                      BASE_LABELS[avatarBuilder.base],
+                      HAIR_LABELS[avatarBuilder.hair],
+                      OUTFIT_LABELS[avatarBuilder.outfit],
+                      ACCESSORY_LABELS[avatarBuilder.accessory],
+                      FRAME_LABELS[avatarBuilder.frame],
+                    ].filter(Boolean).map((label) => (
+                      <span key={label} className="px-2 py-0.5 rounded-full text-xs bg-white/5 text-slate-400 border border-white/10">
+                        {label}
+                      </span>
+                    ))}
                   </div>
 
-                  {/* Detected color tags if available */}
                   {detectedColors && (
                     <div className="mt-3 flex flex-wrap justify-center gap-1.5">
                       <ColorTag label={`Hair: ${detectedColors.hair.label}`} color={detectedColors.hair.color} />
@@ -1166,12 +1221,10 @@ export default function OnboardingPage() {
                   )}
                 </div>
 
-                {/* Actions */}
                 <div className="flex gap-3">
                   <button
                     type="button"
                     onClick={() => {
-                      // Go back to preview if we have photo data, otherwise step 2 upload
                       if (photoDataUrl && detectedColors) {
                         setEssenceStep("preview");
                       } else if (photoDataUrl) {

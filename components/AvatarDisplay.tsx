@@ -5,7 +5,7 @@ import GeneratedAvatar, { AvatarData } from "./GeneratedAvatar";
 interface AvatarDisplayProps {
   /** The avatar value — emoji text character */
   avatar: string;
-  /** Structured avatar data for generated avatar rendering */
+  /** Structured avatar data for generated adventure avatar rendering */
   avatarData?: AvatarData | null;
   /** Size in pixels */
   size?: number;
@@ -19,7 +19,7 @@ interface AvatarDisplayProps {
 
 /**
  * Returns the first letter of a name for fallback display,
- * or a default crystal icon if no name is provided.
+ * or a default compass icon if no name is provided.
  */
 function getFallbackContent(name?: string): string {
   if (name && name.trim().length > 0) {
@@ -36,7 +36,7 @@ export default function AvatarDisplay({
   fallbackName,
   showFrame = true,
 }: AvatarDisplayProps) {
-  // If we have structured avatar data, render the generated avatar
+  // If we have structured avatar data, render the adventure SVG avatar
   if (avatarData && avatarData.base) {
     return (
       <GeneratedAvatar
@@ -48,21 +48,22 @@ export default function AvatarDisplay({
     );
   }
 
-  // If avatar is an emoji or short text (not a URL), render it directly
+  // Legacy: If avatar is an emoji or short text (not a URL), render it directly
   if (avatar && !avatar.startsWith("data:") && !avatar.startsWith("http") && !avatar.startsWith("blob:")) {
+    // Try to render as adventure avatar with legacy emoji mapped to default pathfinder
     return (
-      <div
-        className={`inline-flex items-center justify-center rounded-full ${className}`}
-        style={{
-          width: size,
-          height: size,
-          background: "rgba(168,85,247,0.15)",
+      <GeneratedAvatar
+        avatarData={{
+          base: "pathfinder",
+          hair: "windswept",
+          outfit: "leather",
+          frame: "compass",
+          accessories: [],
         }}
-      >
-        <span className="select-none" style={{ fontSize: size * 0.5 }}>
-          {avatar}
-        </span>
-      </div>
+        size={size}
+        showFrame={showFrame}
+        className={className}
+      />
     );
   }
 
@@ -74,7 +75,8 @@ export default function AvatarDisplay({
       style={{
         width: size,
         height: size,
-        background: "rgba(168,85,247,0.15)",
+        background: "rgba(26,22,37,0.8)",
+        border: "2px solid rgba(196,162,101,0.3)",
       }}
     >
       <span

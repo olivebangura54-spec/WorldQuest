@@ -2,65 +2,115 @@
 - Environments: .env.local
 
   Creating an optimized production build ...
-Turbopack build encountered 2 warnings:
-[next]/internal/font/google/caa3a2e1cccd8315-s.p.woff2
-Error while requesting resource
-There was an issue requesting https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwcGFWNOITd.woff2
+Γ£ô Compiled successfully in 45s
+  Running TypeScript ...
+
+<--- Last few GCs --->
+
+[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
 
 
-[next]/internal/font/google/fef07dbb0973bf53-s.woff2
-Error while requesting resource
-There was an issue requesting https://fonts.gstatic.com/s/geist/v5/gyByhwUxId8gMEwRGFWNOITddY4.woff2
+<--- Last few GCs --->
+
+[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
 
 
+<--- Last few GCs --->
 
-> Build error occurred
-Error: Turbopack build failed with 2 errors:
-[next]/internal/font/google/geist_a71539c9.module.css:7:8
-Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
-   5 |   font-weight: 100 900;
-   6 |   font-display: swap;
->  7 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
-     |        ^
-   8 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-   9 | }
-  10 | /* cyrillic */
+[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
 
-Import map: Resolved by import map
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
 
 
-Import trace:
-  Server Component:
-    [next]/internal/font/google/geist_a71539c9.module.css
-    [next]/internal/font/google/geist_a71539c9.js
-    ./app/layout.tsx
+<--- Last few GCs --->
 
-https://nextjs.org/docs/messages/module-not-found
+[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
 
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
 
-[next]/internal/font/google/geist_a71539c9.module.css:43:8
-Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
-  41 |   font-weight: 100 900;
-  42 |   font-display: swap;
-> 43 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
-     |        ^
-  44 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
-  45 | }
-  46 | @font-face {
-
-Import map: Resolved by import map
-
-
-Import trace:
-  Server Component:
-    [next]/internal/font/google/geist_a71539c9.module.css
-    [next]/internal/font/google/geist_a71539c9.js
-    ./app/layout.tsx
-
-https://nextjs.org/docs/messages/module-not-found
-
-
-    at <unknown> ([next]/internal/font/google/geist_a71539c9.module.css:7:8)
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
-    at <unknown> ([next]/internal/font/google/geist_a71539c9.module.css:43:8)
-    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+ 1: 00007FF75B92403F 
+ 2: 00007FF75C56FAA7 
+ 3: 00007FF75BEE9986 
+ 4: 00007FF75BAAD444 
+ 5: 00007FF75D2CDA81 
+ 6: 00007FF75D2CD88E 
+ 7: 00007FF75CF6C866 
+ 8: 00007FF75CF6397B 
+ 9: 00007FF75CF62DE0 
+10: 00007FF75C4E376F 
+11: 00007FF75C4A87FD 
+12: 00007FF75C4A84F5 
+13: 00007FF75CD50C5F 
+14: 00007FF75B872E0E 
+15: 00007FF75C5C4A36 
+16: 00007FF75D825A73 
+17: 00007FF8D1277374 
+ 1: 00007FF75B92403F 
+ 2: 00007FF75C56FAA7 
+ 3: 00007FF75BEE9986 
+ 4: 00007FF75D51BAB4 
+ 5: 00007FF75D514C59 
+ 6: 00007FF75D50F2CB 
+ 7: 00007FF75D50EA75 
+ 8: 00007FF75D51DAC0 
+ 9: 00007FF75D3DDECD 
+10: 00007FF75CF89D94 
+11: 00007FF75CF6D0A4 
+12: 00007FF75CF63A5B 
+13: 00007FF75CF62E33 
+14: 00007FF75C4E376F 
+15: 00007FF75C4A87FD 
+16: 00007FF75C4A84F5 
+17: 00007FF75CD50C5F 
+18: 00007FF75B872E0E 
+19: 00007FF75C5C4A36 
+ 1: 00007FF75B92403F 
+ 2: 00007FF75C56FAA7 
+ 3: 00007FF75BEE9986 
+ 4: 00007FF75D555D36 
+ 5: 00007FF75D40FC93 
+ 6: 00007FF75D4229C5 
+ 7: 00007FF75D5F7FCD 
+ 8: 00007FF75D4E87DE 
+ 9: 00007FF75D4E86A9 
+10: 00007FF75D0536DD 
+11: 00007FF75CF8C5C9 
+12: 00007FF75D053F88 
+13: 00007FF75D053C4C 
+14: 00007FF75D0539B8 
+15: 00007FF75CF8C16D 
+16: 00007FF75CF65FE0 
+17: 00007FF75CF630E2 
+18: 00007FF75CF62CFE 
+19: 00007FF75C4E376F 
+20: 00007FF75C4A87FD 
+21: 00007FF75C4A84F5 
+22: 00007FF75CD50C5F 
+23: 00007FF75B872E0E 
+24: 00007FF75C5C4A36 
+25: 00007FF75D825A73 
+26: 00007FF8D1277374 
+ 1: 00007FF75B92403F 
+ 2: 00007FF75C56FAA7 
+ 3: 00007FF75BEE9986 
+ 4: 00007FF75BD18A43 
+ 5: 00007FF75BD180FE 
+ 6: 00007FF75BDC1883 
+ 7: 00007FF75BDBF78A 
+ 8: 00007FF75C4E376F 
+ 9: 00007FF75BDC126B 
+10: 00007FF75CD50C5F 
+11: 00007FF75B872E0E 
+12: 00007FF75C5C4A36 
+13: 00007FF75D825A73 
+14: 00007FF8D1277374 
+27: 00007FF8D1B3CC91 RtlUserThreadStart+33
+Next.js build worker exited with code: 134 and signal: null

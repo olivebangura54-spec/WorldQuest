@@ -3,7 +3,6 @@ import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs, where 
 
 export interface AvatarData {
   base: string;
-  face?: string;
   hair?: string;
   outfit?: string;
   accessories?: string[];
