@@ -1,6 +1,23 @@
 import { db } from "@/lib/firebase";
 import { doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs, where } from "firebase/firestore";
 
+/**
+ * Recursively removes undefined values from an object.
+ * Firestore rejects documents containing undefined field values.
+ */
+function stripUndefined(obj: Record<string, any>): Record<string, any> {
+  const cleaned: Record<string, any> = {};
+  for (const [key, value] of Object.entries(obj)) {
+    if (value === undefined) continue;
+    if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+      cleaned[key] = stripUndefined(value);
+    } else {
+      cleaned[key] = value;
+    }
+  }
+  return cleaned;
+}
+
 export interface AvatarData {
   base: string;
   hair?: string;
@@ -66,7 +83,7 @@ export const createUserProfile = async (
     createdAt: new Date().toISOString(),
   };
 
-  await setDoc(userRef, profile);
+  await setDoc(userRef, stripUndefined(profile as Record<string, any>));
   return profile;
 };
 

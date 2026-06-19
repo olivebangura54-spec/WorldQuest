@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { createUserProfile, checkExplorerNameUnique } from "@/services/userService";
+import { createUserProfile, checkExplorerNameUnique, AvatarData } from "@/services/userService";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import EnchantedForestBackground from "@/components/EnchantedForestBackground";
 import GeneratedAvatar from "@/components/GeneratedAvatar";
@@ -812,16 +812,20 @@ export default function OnboardingPage() {
     setError(null);
     try {
       const avatarDisplay = avatarBuilder.base;
-      const avatarData = {
+      const avatarData: AvatarData = {
         base: avatarBuilder.base,
         hair: avatarBuilder.hair,
         outfit: avatarBuilder.outfit,
         accessories: avatarBuilder.accessory !== "None" ? [avatarBuilder.accessory] : [],
         frame: avatarBuilder.frame,
-        photoUrl: photoDataUrl || undefined,
-        detectedHair: detectedColors?.hair.label,
-        detectedSkin: detectedColors?.skin.label,
-        detectedEyes: detectedColors?.eyes.label,
+        ...(photoDataUrl ? { photoUrl: photoDataUrl } : {}),
+        ...(detectedColors
+          ? {
+              detectedHair: detectedColors.hair.label,
+              detectedSkin: detectedColors.skin.label,
+              detectedEyes: detectedColors.eyes.label,
+            }
+          : {}),
       };
       await createUserProfile(user.uid, user.email!, name.trim(), avatarDisplay, {
         avatarType,
