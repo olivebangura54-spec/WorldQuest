@@ -2,115 +2,1516 @@
 - Environments: .env.local
 
   Creating an optimized production build ...
-Γ£ô Compiled successfully in 45s
-  Running TypeScript ...
-
-<--- Last few GCs --->
-
-[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
+Turbopack build encountered 9 warnings:
+[next]/internal/font/google/1bffadaabf893a1e-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa25L7W0Q5n-wU.woff2
 
 
-<--- Last few GCs --->
-
-[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
-
-FATAL ERROR: Zone Allocation failed - process out of memory
------ Native stack trace -----
-
-FATAL ERROR: Zone Allocation failed - process out of memory
------ Native stack trace -----
+[next]/internal/font/google/2bbe8d2671613f1f-s.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2pL7W0Q5n-wU.woff2
 
 
-<--- Last few GCs --->
-
-[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
-
-FATAL ERROR: Zone Allocation failed - process out of memory
------ Native stack trace -----
+[next]/internal/font/google/2c55a0e60120577a-s.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2JL7W0Q5n-wU.woff2
 
 
-<--- Last few GCs --->
+[next]/internal/font/google/5476f68d60460930-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1pL7W0Q5n-wU.woff2
 
-[12632:00000246C6B1F000]     4921 ms: Scavenge (interleaved) 71.1 (106.0) -> 56.7 (111.8) MB, pooled: 0 MB, 23.88 / 0.03 ms  (average mu = 0.995, current mu = 0.995) allocation failure; 
 
-FATAL ERROR: Zone Allocation failed - process out of memory
------ Native stack trace -----
+[next]/internal/font/google/83afe278b6a6bb3c-s.p.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2
 
- 1: 00007FF75B92403F 
- 2: 00007FF75C56FAA7 
- 3: 00007FF75BEE9986 
- 4: 00007FF75BAAD444 
- 5: 00007FF75D2CDA81 
- 6: 00007FF75D2CD88E 
- 7: 00007FF75CF6C866 
- 8: 00007FF75CF6397B 
- 9: 00007FF75CF62DE0 
-10: 00007FF75C4E376F 
-11: 00007FF75C4A87FD 
-12: 00007FF75C4A84F5 
-13: 00007FF75CD50C5F 
-14: 00007FF75B872E0E 
-15: 00007FF75C5C4A36 
-16: 00007FF75D825A73 
-17: 00007FF8D1277374 
- 1: 00007FF75B92403F 
- 2: 00007FF75C56FAA7 
- 3: 00007FF75BEE9986 
- 4: 00007FF75D51BAB4 
- 5: 00007FF75D514C59 
- 6: 00007FF75D50F2CB 
- 7: 00007FF75D50EA75 
- 8: 00007FF75D51DAC0 
- 9: 00007FF75D3DDECD 
-10: 00007FF75CF89D94 
-11: 00007FF75CF6D0A4 
-12: 00007FF75CF63A5B 
-13: 00007FF75CF62E33 
-14: 00007FF75C4E376F 
-15: 00007FF75C4A87FD 
-16: 00007FF75C4A84F5 
-17: 00007FF75CD50C5F 
-18: 00007FF75B872E0E 
-19: 00007FF75C5C4A36 
- 1: 00007FF75B92403F 
- 2: 00007FF75C56FAA7 
- 3: 00007FF75BEE9986 
- 4: 00007FF75D555D36 
- 5: 00007FF75D40FC93 
- 6: 00007FF75D4229C5 
- 7: 00007FF75D5F7FCD 
- 8: 00007FF75D4E87DE 
- 9: 00007FF75D4E86A9 
-10: 00007FF75D0536DD 
-11: 00007FF75CF8C5C9 
-12: 00007FF75D053F88 
-13: 00007FF75D053C4C 
-14: 00007FF75D0539B8 
-15: 00007FF75CF8C16D 
-16: 00007FF75CF65FE0 
-17: 00007FF75CF630E2 
-18: 00007FF75CF62CFE 
-19: 00007FF75C4E376F 
-20: 00007FF75C4A87FD 
-21: 00007FF75C4A84F5 
-22: 00007FF75CD50C5F 
-23: 00007FF75B872E0E 
-24: 00007FF75C5C4A36 
-25: 00007FF75D825A73 
-26: 00007FF8D1277374 
- 1: 00007FF75B92403F 
- 2: 00007FF75C56FAA7 
- 3: 00007FF75BEE9986 
- 4: 00007FF75BD18A43 
- 5: 00007FF75BD180FE 
- 6: 00007FF75BDC1883 
- 7: 00007FF75BDBF78A 
- 8: 00007FF75C4E376F 
- 9: 00007FF75BDC126B 
-10: 00007FF75CD50C5F 
-11: 00007FF75B872E0E 
-12: 00007FF75C5C4A36 
-13: 00007FF75D825A73 
-14: 00007FF8D1277374 
-27: 00007FF8D1B3CC91 RtlUserThreadStart+33
-Next.js build worker exited with code: 134 and signal: null
+
+[next]/internal/font/google/9c72aa0f40e4eef8-s.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa0ZL7W0Q5n-wU.woff2
+
+
+[next]/internal/font/google/ad66f9afd8947f86-s.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/inter/v20/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa2ZL7W0Q5n-wU.woff2
+
+
+[next]/internal/font/google/cc014fcb166cf364-s.p.woff2
+Error while requesting resource
+There was an issue establishing a connection while requesting https://fonts.gstatic.com/s/cinzel/v26/8vIJ7ww63mVu7gt79mT7PkRXMw.woff2
+
+
+[next]/internal/font/google/f13700f23fbdc6fd-s.woff2
+Error while requesting resource
+There was an issue requesting https://fonts.gstatic.com/s/cinzel/v26/8vIJ7ww63mVu7gt7-GT7PkRXM8Xx.woff2
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 61 errors:
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:7:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+   5 |   font-weight: 400;
+   6 |   font-display: swap;
+>  7 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+   8 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+   9 | }
+  10 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:16:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  14 |   font-weight: 400;
+  15 |   font-display: swap;
+> 16 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  17 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  18 | }
+  19 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:25:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  23 |   font-weight: 500;
+  24 |   font-display: swap;
+> 25 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  26 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+  27 | }
+  28 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:34:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  32 |   font-weight: 500;
+  33 |   font-display: swap;
+> 34 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  35 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  36 | }
+  37 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:43:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  41 |   font-weight: 600;
+  42 |   font-display: swap;
+> 43 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  44 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+  45 | }
+  46 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:52:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  50 |   font-weight: 600;
+  51 |   font-display: swap;
+> 52 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  53 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  54 | }
+  55 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:61:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  59 |   font-weight: 700;
+  60 |   font-display: swap;
+> 61 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  62 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+  63 | }
+  64 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:70:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  68 |   font-weight: 700;
+  69 |   font-display: swap;
+> 70 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  71 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  72 | }
+  73 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:79:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  77 |   font-weight: 800;
+  78 |   font-display: swap;
+> 79 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  80 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+  81 | }
+  82 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:88:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  86 |   font-weight: 800;
+  87 |   font-display: swap;
+> 88 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  89 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  90 | }
+  91 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:97:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+   95 |   font-weight: 900;
+   96 |   font-display: swap;
+>  97 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+   98 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+   99 | }
+  100 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/cinzel_a1fd8d72.module.css:106:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  104 |   font-weight: 900;
+  105 |   font-display: swap;
+> 106 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  107 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  108 | }
+  109 | @font-face {
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/cinzel_a1fd8d72.module.css
+    [next]/internal/font/google/cinzel_a1fd8d72.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:7:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+   5 |   font-weight: 300;
+   6 |   font-display: swap;
+>  7 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+   8 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+   9 | }
+  10 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:16:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  14 |   font-weight: 300;
+  15 |   font-display: swap;
+> 16 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  17 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  18 | }
+  19 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:25:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  23 |   font-weight: 300;
+  24 |   font-display: swap;
+> 25 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  26 |   unicode-range: U+1F00-1FFF;
+  27 | }
+  28 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:34:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  32 |   font-weight: 300;
+  33 |   font-display: swap;
+> 34 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  35 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  36 | }
+  37 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:43:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  41 |   font-weight: 300;
+  42 |   font-display: swap;
+> 43 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  44 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-0...
+  45 | }
+  46 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:52:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  50 |   font-weight: 300;
+  51 |   font-display: swap;
+> 52 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  53 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, ...
+  54 | }
+  55 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:61:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  59 |   font-weight: 300;
+  60 |   font-display: swap;
+> 61 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  62 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+...
+  63 | }
+  64 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:70:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  68 |   font-weight: 400;
+  69 |   font-display: swap;
+> 70 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  71 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  72 | }
+  73 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:79:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  77 |   font-weight: 400;
+  78 |   font-display: swap;
+> 79 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  80 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  81 | }
+  82 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:88:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  86 |   font-weight: 400;
+  87 |   font-display: swap;
+> 88 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.gs...
+     |        ^
+  89 |   unicode-range: U+1F00-1FFF;
+  90 | }
+  91 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:97:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+   95 |   font-weight: 400;
+   96 |   font-display: swap;
+>  97 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+   98 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+   99 | }
+  100 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:106:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  104 |   font-weight: 400;
+  105 |   font-display: swap;
+> 106 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  107 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  108 | }
+  109 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:115:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  113 |   font-weight: 400;
+  114 |   font-display: swap;
+> 115 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  116 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  117 | }
+  118 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:124:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  122 |   font-weight: 400;
+  123 |   font-display: swap;
+> 124 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  125 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  126 | }
+  127 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:133:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  131 |   font-weight: 500;
+  132 |   font-display: swap;
+> 133 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  134 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  135 | }
+  136 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:142:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  140 |   font-weight: 500;
+  141 |   font-display: swap;
+> 142 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  143 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  144 | }
+  145 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:151:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  149 |   font-weight: 500;
+  150 |   font-display: swap;
+> 151 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  152 |   unicode-range: U+1F00-1FFF;
+  153 | }
+  154 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:160:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  158 |   font-weight: 500;
+  159 |   font-display: swap;
+> 160 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  161 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  162 | }
+  163 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:169:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  167 |   font-weight: 500;
+  168 |   font-display: swap;
+> 169 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  170 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  171 | }
+  172 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:178:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  176 |   font-weight: 500;
+  177 |   font-display: swap;
+> 178 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  179 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  180 | }
+  181 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:187:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  185 |   font-weight: 500;
+  186 |   font-display: swap;
+> 187 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  188 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  189 | }
+  190 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:196:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  194 |   font-weight: 600;
+  195 |   font-display: swap;
+> 196 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  197 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  198 | }
+  199 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:205:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  203 |   font-weight: 600;
+  204 |   font-display: swap;
+> 205 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  206 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  207 | }
+  208 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:214:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  212 |   font-weight: 600;
+  213 |   font-display: swap;
+> 214 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  215 |   unicode-range: U+1F00-1FFF;
+  216 | }
+  217 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:223:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  221 |   font-weight: 600;
+  222 |   font-display: swap;
+> 223 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  224 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  225 | }
+  226 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:232:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  230 |   font-weight: 600;
+  231 |   font-display: swap;
+> 232 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  233 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  234 | }
+  235 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:241:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  239 |   font-weight: 600;
+  240 |   font-display: swap;
+> 241 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  242 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  243 | }
+  244 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:250:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  248 |   font-weight: 600;
+  249 |   font-display: swap;
+> 250 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  251 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  252 | }
+  253 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:259:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  257 |   font-weight: 700;
+  258 |   font-display: swap;
+> 259 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  260 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  261 | }
+  262 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:268:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  266 |   font-weight: 700;
+  267 |   font-display: swap;
+> 268 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  269 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  270 | }
+  271 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:277:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  275 |   font-weight: 700;
+  276 |   font-display: swap;
+> 277 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  278 |   unicode-range: U+1F00-1FFF;
+  279 | }
+  280 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:286:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  284 |   font-weight: 700;
+  285 |   font-display: swap;
+> 286 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  287 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  288 | }
+  289 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:295:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  293 |   font-weight: 700;
+  294 |   font-display: swap;
+> 295 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  296 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  297 | }
+  298 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:304:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  302 |   font-weight: 700;
+  303 |   font-display: swap;
+> 304 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  305 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  306 | }
+  307 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:313:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  311 |   font-weight: 700;
+  312 |   font-display: swap;
+> 313 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  314 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  315 | }
+  316 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:322:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  320 |   font-weight: 800;
+  321 |   font-display: swap;
+> 322 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  323 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  324 | }
+  325 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:331:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  329 |   font-weight: 800;
+  330 |   font-display: swap;
+> 331 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  332 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  333 | }
+  334 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:340:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  338 |   font-weight: 800;
+  339 |   font-display: swap;
+> 340 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  341 |   unicode-range: U+1F00-1FFF;
+  342 | }
+  343 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:349:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  347 |   font-weight: 800;
+  348 |   font-display: swap;
+> 349 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  350 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  351 | }
+  352 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:358:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  356 |   font-weight: 800;
+  357 |   font-display: swap;
+> 358 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  359 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  360 | }
+  361 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:367:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  365 |   font-weight: 800;
+  366 |   font-display: swap;
+> 367 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  368 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  369 | }
+  370 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:376:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  374 |   font-weight: 800;
+  375 |   font-display: swap;
+> 376 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  377 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  378 | }
+  379 | /* cyrillic-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:385:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  383 |   font-weight: 900;
+  384 |   font-display: swap;
+> 385 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  386 |   unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+  387 | }
+  388 | /* cyrillic */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:394:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  392 |   font-weight: 900;
+  393 |   font-display: swap;
+> 394 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  395 |   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+  396 | }
+  397 | /* greek-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:403:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  401 |   font-weight: 900;
+  402 |   font-display: swap;
+> 403 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  404 |   unicode-range: U+1F00-1FFF;
+  405 | }
+  406 | /* greek */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:412:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  410 |   font-weight: 900;
+  411 |   font-display: swap;
+> 412 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  413 |   unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+  414 | }
+  415 | /* vietnamese */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:421:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  419 |   font-weight: 900;
+  420 |   font-display: swap;
+> 421 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  422 |   unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-...
+  423 | }
+  424 | /* latin-ext */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:430:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  428 |   font-weight: 900;
+  429 |   font-display: swap;
+> 430 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  431 |   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,...
+  432 | }
+  433 | /* latin */
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[next]/internal/font/google/inter_2fcf6573.module.css:439:8
+Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+  437 |   font-weight: 900;
+  438 |   font-display: swap;
+> 439 |   src: url(@vercel/turbopack-next/internal/font/google/font?{%22url%22:%22https://fonts.g...
+      |        ^
+  440 |   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U...
+  441 | }
+  442 | @font-face {
+
+Import map: Resolved by import map
+
+
+Import trace:
+  Server Component:
+    [next]/internal/font/google/inter_2fcf6573.module.css
+    [next]/internal/font/google/inter_2fcf6573.js
+    ./app/layout.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:7:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:16:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:25:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:34:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:43:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:52:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:61:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:70:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:79:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:88:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:97:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/cinzel_a1fd8d72.module.css:106:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:7:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:16:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:25:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:34:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:43:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:52:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:61:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:70:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:79:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:88:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:97:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:106:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:115:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:124:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:133:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:142:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:151:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:160:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:169:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:178:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:187:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:196:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:205:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:214:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:223:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:232:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:241:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:250:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:259:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:268:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:277:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:286:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:295:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:304:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:313:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:322:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:331:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:340:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:349:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:358:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:367:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:376:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:385:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:394:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:403:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:412:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:421:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:430:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> ([next]/internal/font/google/inter_2fcf6573.module.css:439:8)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
