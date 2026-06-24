@@ -48,10 +48,9 @@ export default function WorldMapPage() {
   const totalDistance = getTotalDistance();
   const progressPercent = Math.round((completedCount / CHAPTERS.length) * 100);
 
-  // Auto-position cities in a curved path across the screen
   const getCityPosition = (index: number, total: number) => {
-    const x = 10 + (index / (total - 1)) * 80; // 10% to 90% across
-    const y = 30 + Math.sin((index / (total - 1)) * Math.PI) * 25; // Sine wave curve
+    const x = 10 + (index / (total - 1)) * 80;
+    const y = 30 + Math.sin((index / (total - 1)) * Math.PI) * 25;
     return { x, y };
   };
 
@@ -76,6 +75,12 @@ export default function WorldMapPage() {
           <span className="text-amber-400">🪙 {progress.totalGold}</span>
           <span className="text-cyan-400">✨ {progress.totalXP} XP</span>
           <span className="text-purple-400">🎫 {completedCount}/{CHAPTERS.length} Cities</span>
+          <button 
+            onClick={() => router.push("/dashboard")}
+            className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-sm transition-all"
+          >
+            📊 Dashboard
+          </button>
         </div>
       </div>
 
@@ -134,12 +139,10 @@ export default function WorldMapPage() {
               className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${unlocked ? 'cursor-pointer hover:scale-110' : 'cursor-not-allowed opacity-30'}`}
               style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
             >
-              {/* Pulse ring for current chapter */}
               {(current || completed) && (
                 <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: completed ? chapter.themeColor : chapter.accentColor }} />
               )}
 
-              {/* City dot */}
               <div
                 className={`relative w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-300 ${hovered ? 'scale-125' : ''}`}
                 style={{
@@ -161,7 +164,6 @@ export default function WorldMapPage() {
                 )}
               </div>
 
-              {/* City label */}
               <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all ${hovered ? 'opacity-100 translate-y-0' : 'opacity-80'}`}>
                 <div className="text-xs md:text-sm font-bold" style={{ color: completed ? chapter.themeColor : unlocked ? chapter.accentColor : '#666' }}>
                   {chapter.name}
