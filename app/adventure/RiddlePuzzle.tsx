@@ -7,7 +7,7 @@ interface Props {
   realmNumber: number;
   onComplete: () => void;
   onExit: () => void;
-  customRiddle?: {        // ← ADD THIS LINE
+  customRiddle?: {
     question: string;
     answers: string[];
     hints: string[];
@@ -48,7 +48,8 @@ const RIDDLE_BANK = [
 ];
 export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onExit, customRiddle }: Props) {
   const difficulty = Math.min(playerLevel, 5);
-const riddle = customRiddle || RIDDLE_BANK[(realmNumber - 1) % RIDDLE_BANK.length];
+const riddleIndex = (realmNumber - 1) % RIDDLE_BANK.length;
+const riddle = customRiddle || RIDDLE_BANK[riddleIndex];
   
   const [timeLeft, setTimeLeft] = useState(riddle.timeLimit - (difficulty * 3));
   const [input, setInput] = useState("");
