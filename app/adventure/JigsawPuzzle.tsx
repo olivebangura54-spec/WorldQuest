@@ -7,6 +7,7 @@ interface Props {
   realmNumber: number;
   onComplete: () => void;
   onExit: () => void;
+  customImage?: string;    // ← ADD THIS LINE
 }
 
 const REALM_IMAGES = [
@@ -54,7 +55,7 @@ interface Inventory {
   skipTickets: number;
 }
 
-export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onExit }: Props) {
+export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onExit, customImage }: Props) {
   const getGridSize = () => {
     if (playerLevel <= 2) return { cols: 3, rows: 2 };
     if (playerLevel <= 4) return { cols: 4, rows: 3 };
@@ -64,7 +65,7 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
 
   const { cols, rows } = getGridSize();
   const totalPieces = cols * rows;
-  const imageUrl = REALM_IMAGES[(realmNumber - 1) % REALM_IMAGES.length];
+const imageUrl = customImage || REALM_IMAGES[(realmNumber - 1) % REALM_IMAGES.length];
   const rotationEnabled = playerLevel >= 4;
 
   const [pieces, setPieces] = useState<Piece[]>([]);

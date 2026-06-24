@@ -7,8 +7,13 @@ interface Props {
   realmNumber: number;
   onComplete: () => void;
   onExit: () => void;
+  customRiddle?: {        // ← ADD THIS LINE
+    question: string;
+    answers: string[];
+    hints: string[];
+    timeLimit: number;
+  };
 }
-
 const RIDDLE_BANK = [
   {
     question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?",
@@ -41,11 +46,9 @@ const RIDDLE_BANK = [
     timeLimit: 35,
   },
 ];
-
-export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onExit }: Props) {
+export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onExit, customRiddle }: Props) {
   const difficulty = Math.min(playerLevel, 5);
-  const riddleIndex = (realmNumber - 1) % RIDDLE_BANK.length;
-  const riddle = RIDDLE_BANK[riddleIndex];
+const riddle = customRiddle || RIDDLE_BANK[(realmNumber - 1) % RIDDLE_BANK.length];
   
   const [timeLeft, setTimeLeft] = useState(riddle.timeLimit - (difficulty * 3));
   const [input, setInput] = useState("");
@@ -198,7 +201,7 @@ export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onE
         </div>
 
         <div className="mt-4 space-y-2">
-          {riddle.hints.slice(0, hintsUsed).map((hint, i) => (
+          {riddle.hints.slice(0, hintsUsed).map((hint: string, i: number) => (
             <div key={i} className="p-3 rounded-xl bg-purple-500/5 border border-purple-500/10 text-sm text-purple-200/70 italic">
               💫 Hint {i + 1}: {hint}
             </div>
