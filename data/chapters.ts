@@ -1,0 +1,663 @@
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctIndex: number;
+  fact: string;
+  difficulty: "easy" | "medium" | "hard";
+}
+
+export interface Chapter {
+  id: string;
+  name: string;
+  subtitle: string;
+  region: string;
+  image: string;
+  jigsawImage: string;
+  themeColor: string;
+  accentColor: string;
+  facts: string[];
+  quizQuestions: QuizQuestion[];
+  bossPuzzle: "riddle" | "jigsaw";
+  riddleBank?: {
+    question: string;
+    answers: string[];
+    hints: string[];
+    timeLimit: number;
+  }[];
+  distanceFromPrev?: number; // km
+}
+
+export const CHAPTERS: Chapter[] = [
+  {
+    id: "sahara",
+    name: "Sahara Desert",
+    subtitle: "The Golden Expanse",
+    region: "Africa",
+    image: "https://images.unsplash.com/photo-1509316785289-025f5b846b35?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1542401886-65d6c61db217?w=600&h=400&fit=crop",
+    themeColor: "#d97706",
+    accentColor: "#fbbf24",
+    distanceFromPrev: 0,
+    facts: [
+      "The Sahara is the world's largest hot desert, covering 9.2 million km².",
+      "Temperatures can reach 58°C (136°F) during the day and drop below freezing at night.",
+      "Despite the heat, over 500 plant species and 70 animal species call it home.",
+      "The Sahara was once a lush savanna with lakes and rivers 5,000 years ago.",
+      "The name 'Sahara' comes from the Arabic word for 'deserts' — plural because it's so vast.",
+    ],
+    quizQuestions: [
+      {
+        question: "What is the Sahara's average annual rainfall?",
+        options: ["Less than 100mm", "250mm", "500mm", "750mm"],
+        correctIndex: 0,
+        fact: "Most of the Sahara receives less than 100mm of rain per year — some areas get none for decades.",
+        difficulty: "easy",
+      },
+      {
+        question: "Which animal is uniquely adapted to Sahara's extreme heat?",
+        options: ["Polar bear", "Fennec fox", "Penguin", "Koala"],
+        correctIndex: 1,
+        fact: "The Fennec fox has oversized ears that dissipate heat and can survive without free water.",
+        difficulty: "easy",
+      },
+      {
+        question: "What resource lies beneath the Sahara's sands?",
+        options: ["Gold only", "Oil and natural gas", "Diamonds only", "Coal"],
+        correctIndex: 1,
+        fact: "Massive oil and gas reserves are found beneath Algeria, Libya, and Egypt's desert regions.",
+        difficulty: "easy",
+      },
+      {
+        question: "The Sahara was once a lush savanna how many years ago?",
+        options: ["1,000 years", "5,000 years", "10,000 years", "50,000 years"],
+        correctIndex: 1,
+        fact: "Around 5,000 years ago, the Sahara had lakes, rivers, and abundant wildlife — a 'Green Sahara' period.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which Berber nomadic people have traversed the Sahara for millennia?",
+        options: ["Maasai", "Tuareg", "Zulu", "Bedouin"],
+        correctIndex: 1,
+        fact: "The Tuareg are known as the 'Blue People' for their indigo-dyed clothing and have crossed the Sahara for over 2,000 years.",
+        difficulty: "medium",
+      },
+      {
+        question: "What is the highest recorded temperature in the Sahara?",
+        options: ["45°C", "52°C", "58°C", "65°C"],
+        correctIndex: 2,
+        fact: "The Sahara has recorded temperatures of 58°C (136°F) — among the hottest ever measured on Earth.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which ancient trade route crossed the Sahara connecting West Africa to the Mediterranean?",
+        options: ["Silk Road", "Trans-Saharan trade route", "Salt Road", "Gold Road"],
+        correctIndex: 1,
+        fact: "The Trans-Saharan trade route moved gold, salt, and slaves from sub-Saharan Africa to Mediterranean markets for over 1,000 years.",
+        difficulty: "hard",
+      },
+      {
+        question: "What phenomenon causes the Sahara to periodically 'green' every 20,000 years?",
+        options: ["Volcanic eruptions", "Earth's axial precession changing monsoon patterns", "Solar flares", "Ocean current shifts"],
+        correctIndex: 1,
+        fact: "Earth's axial precession alters the African monsoon, causing the Sahara to cycle between desert and grassland every 20,000 years.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which Roman emperor led an expedition into the Sahara that ended in complete disaster?",
+        options: ["Augustus", "Nero", "Caligula", "Septimius Severus"],
+        correctIndex: 3,
+        fact: "Emperor Septimius Severus (born in Leptis Magna, North Africa) sent expeditions south, but Roman control never extended deep into the Sahara.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "riddle",
+    riddleBank: [
+      {
+        question: "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?",
+        answers: ["map", "a map"],
+        hints: ["You use me to find your way.", "I show the world in miniature.", "I'm paper that shows geography."],
+        timeLimit: 45,
+      },
+    ],
+  },
+  {
+    id: "cairo",
+    name: "Cairo",
+    subtitle: "City of a Thousand Minarets",
+    region: "Africa",
+    image: "https://images.unsplash.com/photo-1572252009286-268acec5ca0a?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1539650116574-8efeb43e2750?w=600&h=400&fit=crop",
+    themeColor: "#dc2626",
+    accentColor: "#f87171",
+    distanceFromPrev: 960,
+    facts: [
+      "Cairo is the largest city in Africa and the Arab world with over 20 million people.",
+      "The Great Pyramid of Giza was the tallest man-made structure for over 3,800 years.",
+      "Cairo's Khan el-Khalili bazaar has been operating since the 14th century.",
+      "The city sits on the ruins of ancient Memphis, capital of Lower Egypt.",
+      "Cairo's metro is the only one in Africa and carries 4 million passengers daily.",
+    ],
+    quizQuestions: [
+      {
+        question: "How many years did it take to build the Great Pyramid?",
+        options: ["10 years", "20 years", "50 years", "100 years"],
+        correctIndex: 1,
+        fact: "The Great Pyramid took approximately 20 years to complete, finished around 2560 BCE.",
+        difficulty: "easy",
+      },
+      {
+        question: "What river is Cairo built along?",
+        options: ["Tigris", "Euphrates", "Nile", "Jordan"],
+        correctIndex: 2,
+        fact: "The Nile River is the world's longest river and has sustained Egyptian civilization for millennia.",
+        difficulty: "easy",
+      },
+      {
+        question: "What does 'Cairo' mean in Arabic?",
+        options: ["Golden city", "The Victorious", "Holy place", "River crossing"],
+        correctIndex: 1,
+        fact: "Al-Qāhirah means 'The Victorious' — named for Mars (al-Najm al-Qāhir) rising at its founding.",
+        difficulty: "easy",
+      },
+      {
+        question: "Which pharaoh built the Great Pyramid of Giza?",
+        options: ["Tutankhamun", "Ramses II", "Khufu", "Akhenaten"],
+        correctIndex: 2,
+        fact: "Pharaoh Khufu (Cheops) commissioned the Great Pyramid around 2580–2560 BCE.",
+        difficulty: "medium",
+      },
+      {
+        question: "Cairo's Khan el-Khalili bazaar has operated since which century?",
+        options: ["10th century", "12th century", "14th century", "16th century"],
+        correctIndex: 2,
+        fact: "The bazaar was established in 1382 by Emir Djaharks el-Khalili and remains one of the Middle East's oldest markets.",
+        difficulty: "medium",
+      },
+      {
+        question: "What ancient city lies beneath modern Cairo?",
+        options: ["Thebes", "Memphis", "Alexandria", "Heliopolis"],
+        correctIndex: 1,
+        fact: "Memphis was the capital of Lower Egypt and a major religious center — its ruins now lie beneath Cairo's southern suburbs.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which Fatimid caliph founded Cairo in 969 CE?",
+        options: ["Al-Mu'izz li-Din Allah", "Saladin", "Al-Hakim bi-Amr Allah", "Baybars"],
+        correctIndex: 0,
+        fact: "Al-Mu'izz li-Din Allah of the Fatimid Caliphate founded Cairo as his new capital, moving from Mahdia (Tunisia).",
+        difficulty: "hard",
+      },
+      {
+        question: "The Cairo Geniza contained documents in how many languages?",
+        options: ["3", "5", "8", "12"],
+        correctIndex: 3,
+        fact: "The Cairo Geniza held 400,000 documents in Arabic, Hebrew, Aramaic, Persian, Latin, Greek, Ladino, Yiddish, and more — a treasure of medieval history.",
+        difficulty: "hard",
+      },
+      {
+        question: "What caused the 1977 'Bread Riots' in Cairo?",
+        options: ["Food shortage", "IMF austerity measures ending bread subsidies", "War with Israel", "Drought"],
+        correctIndex: 1,
+        fact: "In 1977, Sadat's government cut bread subsidies per IMF demands. Riots erupted across Cairo, forcing a reversal within days.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "jigsaw",
+  },
+  {
+    id: "sierra-leone",
+    name: "Sierra Leone",
+    subtitle: "Sweet Salone",
+    region: "West Africa",
+    image: "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&h=400&fit=crop",
+    themeColor: "#059669",
+    accentColor: "#34d399",
+    distanceFromPrev: 4800,
+    facts: [
+      "Freetown was founded in 1792 for freed slaves from America and Britain.",
+      "Sierra Leone is known as 'Sweet Salone' among locals.",
+      "The country has over 400 islands along its coastline.",
+      "Bunce Island was a major British slave trading fortress.",
+      "Tacugama Chimpanzee Sanctuary protects endangered chimps near Freetown.",
+      "Sierra Leone is rich in diamonds, iron ore, and rutile.",
+      "The civil war (1991–2002) inspired the film Blood Diamond.",
+      "The country has 16 ethnic groups and 18 languages.",
+      "Lumley Beach is famous for its vibrant nightlife and seafood.",
+    ],
+    quizQuestions: [
+      {
+        question: "When was Freetown founded as a settlement for freed slaves?",
+        options: ["1776", "1792", "1807", "1833"],
+        correctIndex: 1,
+        fact: "Freetown was founded in 1792 by 1,100 freed slaves known as the Nova Scotian Settlers, led by Thomas Peters.",
+        difficulty: "easy",
+      },
+      {
+        question: "What is Sierra Leone's nickname among locals?",
+        options: ["The Jewel", "Sweet Salone", "Green Coast", "Diamond Land"],
+        correctIndex: 1,
+        fact: "'Salone' is Krio for Sierra Leone — 'Sweet Salone' reflects locals' love for their country despite hardships.",
+        difficulty: "easy",
+      },
+      {
+        question: "Which mineral made Sierra Leone infamous during the 1990s?",
+        options: ["Gold", "Diamonds", "Oil", "Uranium"],
+        correctIndex: 1,
+        fact: "Conflict diamonds funded both the RUF rebels and government forces during the brutal 1991–2002 civil war.",
+        difficulty: "easy",
+      },
+      {
+        question: "Who was the Black Loyalist leader who helped found Freetown?",
+        options: ["Olaudah Equiano", "Thomas Peters", "Paul Cuffe", "Frederick Douglass"],
+        correctIndex: 1,
+        fact: "Thomas Peters, a former slave who fought for the British in the American Revolution, led the Nova Scotian settlers to Freetown.",
+        difficulty: "medium",
+      },
+      {
+        question: "What was Bunce Island primarily used for?",
+        options: ["Gold mining", "Slave trading", "Sugar plantations", "Naval base"],
+        correctIndex: 1,
+        fact: "Bunce Island was one of the most important British slave trading posts in West Africa, sending captives to South Carolina and Georgia.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which ethnic group is the largest in Sierra Leone?",
+        options: ["Mende", "Temne", "Kono", "Limba"],
+        correctIndex: 0,
+        fact: "The Mende people make up about 31% of the population, primarily in the south and east, with a rich tradition of secret societies.",
+        difficulty: "medium",
+      },
+      {
+        question: "The 2006 film Blood Diamond was inspired by which Sierra Leonean journalist?",
+        options: ["Sorious Samura", "David Tam-Baryoh", "Edward Kargbo", "None — fictional"],
+        correctIndex: 3,
+        fact: "While inspired by real events, Blood Diamond's characters are fictional. However, Sorious Samura's documentary Cry Freetown (2000) documented the war's brutality.",
+        difficulty: "hard",
+      },
+      {
+        question: "What does 'Krio' primarily derive from?",
+        options: ["French and Wolof", "English and African languages", "Portuguese and Arabic", "Dutch and Hausa"],
+        correctIndex: 1,
+        fact: "Krio is an English-based creole with vocabulary from Yoruba, Igbo, Portuguese, and French — spoken by 90% of Sierra Leoneans.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which peace agreement ended the Sierra Leone Civil War in 1999?",
+        options: ["Abidjan Accord", "Lomé Peace Accord", "Arusha Accords", "Comprehensive Peace Agreement"],
+        correctIndex: 1,
+        fact: "The Lomé Peace Accord (July 7, 1999) granted Foday Sankoh a government position, but collapsed within months. The war ended in 2002 after British intervention.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "riddle",
+    riddleBank: [
+      {
+        question: "I am not alive, but I grow. I don't have lungs, but I need air. I don't have a mouth, but water kills me. What am I?",
+        answers: ["fire"],
+        hints: ["I am hot and dangerous.", "I dance on wood.", "I need oxygen to survive."],
+        timeLimit: 35,
+      },
+    ],
+  },
+  {
+    id: "paris",
+    name: "Paris",
+    subtitle: "The City of Light",
+    region: "Europe",
+    image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&h=400&fit=crop",
+    themeColor: "#7c3aed",
+    accentColor: "#a78bfa",
+    distanceFromPrev: 4700,
+    facts: [
+      "The Eiffel Tower was meant to be dismantled after 20 years but was saved for radio transmission.",
+      "There is only one stop sign in all of Paris — the city relies on priority-to-the-right rules.",
+      "The Catacombs hold the remains of over 6 million people in underground tunnels.",
+      "Paris was originally a Roman city called Lutetia, founded in 52 BCE.",
+      "The Louvre is the world's most-visited museum, with nearly 10 million visitors annually.",
+    ],
+    quizQuestions: [
+      {
+        question: "When was the Louvre originally built?",
+        options: ["As a palace in the 12th century", "As a museum in 1793", "As a fortress in the 9th century", "As a church in the 15th century"],
+        correctIndex: 0,
+                fact: "The Louvre began as a medieval fortress in 1190 and became a royal palace before becoming a museum.",
+        difficulty: "easy",
+      },
+      {
+        question: "How many arrondissements (districts) does Paris have?",
+        options: ["10", "15", "20", "25"],
+        correctIndex: 2,
+        fact: "Paris has 20 arrondissements arranged in a spiral snail shell pattern from the city center.",
+        difficulty: "easy",
+      },
+      {
+        question: "What river flows through Paris?",
+        options: ["Thames", "Seine", "Danube", "Rhine"],
+        correctIndex: 1,
+        fact: "The Seine River flows 777 km through Paris and has been declared a UNESCO World Heritage Site.",
+        difficulty: "easy",
+      },
+      {
+        question: "Why was the Eiffel Tower originally saved from demolition?",
+        options: ["Tourism", "Radio transmissions", "Military use", "Art exhibitions"],
+        correctIndex: 1,
+        fact: "Gustave Eiffel argued the tower was perfect for radio antennae — it became crucial for military communications in WWI.",
+        difficulty: "medium",
+      },
+      {
+        question: "What was Paris called under Roman rule?",
+        options: ["Gaul", "Lutetia", "Gallia", "Francorum"],
+        correctIndex: 1,
+        fact: "Lutetia Parisiorum was founded around 52 BCE on the Île de la Cité — the Parisii were a Gallic tribe.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which king built the Palace of Versailles to escape Paris?",
+        options: ["Louis XIII", "Louis XIV", "Louis XVI", "Napoleon"],
+        correctIndex: 1,
+        fact: "The Sun King Louis XIV moved the court to Versailles in 1682, making Paris a provincial backwater until the Revolution.",
+        difficulty: "medium",
+      },
+      {
+        question: "How many people are buried in the Paris Catacombs?",
+        options: ["1 million", "3 million", "6 million", "10 million"],
+        correctIndex: 2,
+        fact: "The Catacombs hold remains of over 6 million people, moved from overflowing cemeteries starting in 1786.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which Parisian architect designed both the Louvre Pyramid and the National Gallery of Art East Building?",
+        options: ["Le Corbusier", "I.M. Pei", "Jean Nouvel", "Renzo Piano"],
+        correctIndex: 1,
+        fact: "I.M. Pei's glass pyramid (1989) was controversial but is now iconic. He also designed the East Building in Washington D.C.",
+        difficulty: "hard",
+      },
+      {
+        question: "What triggered the Paris Commune of 1871?",
+        options: ["Napoleon's return", "France's defeat in the Franco-Prussian War", "Industrial revolution", "Cholera epidemic"],
+        correctIndex: 1,
+        fact: "After France's defeat, radical workers seized Paris for 72 days. The brutal suppression killed 10,000–30,000 communards.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "riddle",
+    riddleBank: [
+      {
+        question: "The more you take, the more you leave behind. What am I?",
+        answers: ["footsteps", "footstep", "steps", "footprints"],
+        hints: ["I happen when you walk.", "I trail behind you.", "You make me with your feet."],
+        timeLimit: 30,
+      },
+    ],
+  },
+  {
+    id: "london",
+    name: "London",
+    subtitle: "The Smoke",
+    region: "Europe",
+    image: "https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1529655683826-aba9b3e77383?w=600&h=400&fit=crop",
+    themeColor: "#2563eb",
+    accentColor: "#60a5fa",
+    distanceFromPrev: 340,
+    facts: [
+      "Big Ben is actually the name of the bell inside the tower, not the tower itself (Elizabeth Tower).",
+      "The London Underground is the world's oldest underground railway, opened in 1863.",
+      "Over 300 languages are spoken in London — more than any other city.",
+      "The Tower of London once housed a polar bear gifted by the King of Norway in 1252.",
+      "The Great Fire of London in 1666 destroyed 13,200 houses but killed only 6 people.",
+    ],
+    quizQuestions: [
+      {
+        question: "What was London called by the Romans?",
+        options: ["Londinium", "Britannia", "Albion", "Camulodunum"],
+        correctIndex: 0,
+        fact: "Londinium was founded around 47 CE and quickly became the largest city in Roman Britain.",
+        difficulty: "easy",
+      },
+      {
+        question: "How many times has London hosted the Olympics?",
+        options: ["1", "2", "3", "4"],
+        correctIndex: 2,
+        fact: "London hosted in 1908, 1948, and 2012 — the only city to host three Summer Olympics.",
+        difficulty: "easy",
+      },
+      {
+        question: "What river flows through London?",
+        options: ["Severn", "Thames", "Trent", "Mersey"],
+        correctIndex: 1,
+        fact: "The Thames is 346 km long and has been central to London's trade and identity for 2,000 years.",
+        difficulty: "easy",
+      },
+      {
+        question: "When did the London Underground first open?",
+        options: ["1851", "1863", "1890", "1900"],
+        correctIndex: 1,
+        fact: "The Metropolitan Railway opened January 10, 1863, using steam locomotives — the world's first underground railway.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which monarch had six wives and founded the Church of England?",
+        options: ["Henry VII", "Henry VIII", "Elizabeth I", "Charles I"],
+        correctIndex: 1,
+        fact: "Henry VIII broke with Rome in 1534 to divorce Catherine of Aragon. Two wives were executed, two marriages annulled.",
+        difficulty: "medium",
+      },
+      {
+        question: "What caused the Great Fire of London in 1666?",
+        options: ["War", "Baking accident", "Lightning", "Arson"],
+        correctIndex: 1,
+        fact: "The fire started in Thomas Farriner's bakery on Pudding Lane. It burned for 4 days, destroying the medieval city.",
+        difficulty: "medium",
+      },
+      {
+        question: "What is the actual name of 'Big Ben'?",
+        options: ["Victoria Tower", "Elizabeth Tower", "Westminster Tower", "Clock Tower"],
+        correctIndex: 1,
+        fact: "Big Ben is the 13.7-ton bell. The tower was renamed Elizabeth Tower in 2012 for the Queen's Diamond Jubilee.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which London hospital pioneered antiseptic surgery in 1867?",
+        options: ["St Thomas'", "Guy's", "King's College", "Glasgow Royal Infirmary"],
+        correctIndex: 3,
+        fact: "Joseph Lister introduced carbolic acid antisepsis at Glasgow Royal Infirmary. King's College Hospital was where he later worked in London.",
+        difficulty: "hard",
+      },
+      {
+        question: "How many people died in the Great Smog of 1952?",
+        options: ["1,000", "4,000", "12,000", "25,000"],
+        correctIndex: 2,
+        fact: "The Great Smog killed approximately 12,000 people and led to the Clean Air Act 1956, banning coal fires in urban areas.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "jigsaw",
+  },
+  {
+    id: "tokyo",
+    name: "Tokyo",
+    subtitle: "The Neon Capital",
+    region: "Asia",
+    image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1503899036084-c55cdd92da26?w=600&h=400&fit=crop",
+    themeColor: "#db2777",
+    accentColor: "#f472b6",
+    distanceFromPrev: 9600,
+    facts: [
+      "Tokyo was originally a small fishing village called Edo before becoming the world's largest city.",
+      "The Shibuya Crossing is the busiest pedestrian crossing in the world, with up to 3,000 people per green light.",
+      "Tokyo has over 200 earthquakes per year, but most are too small to feel.",
+      "There are more Michelin-starred restaurants in Tokyo than in any other city.",
+      "The Tokyo Skytree is the tallest tower in the world at 634 meters.",
+    ],
+    quizQuestions: [
+      {
+        question: "What was Tokyo's original name?",
+        options: ["Kyoto", "Osaka", "Edo", "Nara"],
+        correctIndex: 2,
+        fact: "Edo became Tokyo ('Eastern Capital') in 1868 when the emperor moved from Kyoto.",
+        difficulty: "easy",
+      },
+      {
+        question: "How many people live in the Greater Tokyo Area?",
+        options: ["15 million", "25 million", "37 million", "50 million"],
+        correctIndex: 2,
+        fact: "Greater Tokyo is the world's most populous metropolitan area with ~37 million residents.",
+        difficulty: "easy",
+      },
+      {
+        question: "What does 'Shinkansen' mean?",
+        options: ["Bullet train", "New trunk line", "Fast rail", "Electric express"],
+        correctIndex: 1,
+        fact: "Shinkansen literally means 'new trunk line' — the first line opened in 1964 for the Tokyo Olympics.",
+        difficulty: "easy",
+      },
+      {
+        question: "Which US commodore forced Japan to open trade in 1853?",
+        options: ["Perry", "Stirling", "Harris", "Rodgers"],
+        correctIndex: 0,
+        fact: "Matthew Perry's Black Ships arrived in Edo Bay, ending 220 years of sakoku (isolation) and triggering the Meiji Restoration.",
+        difficulty: "medium",
+      },
+      {
+        question: "What natural disaster destroyed much of Tokyo in 1923?",
+        options: ["Typhoon", "Earthquake", "Tsunami", "Volcano"],
+        correctIndex: 1,
+        fact: "The Great Kantō earthquake (7.9 magnitude) killed 105,000 people. Rumors sparked massacres of Koreans by vigilantes.",
+        difficulty: "medium",
+      },
+      {
+        question: "Which Tokyo district is famous for electronics and anime culture?",
+        options: ["Shibuya", "Shinjuku", "Akihabara", "Ginza"],
+        correctIndex: 2,
+        fact: "Akihabara 'Electric Town' transformed from post-war black market to global center of otaku culture, maid cafés, and electronics.",
+        difficulty: "medium",
+      },
+      {
+        question: "What is the significance of 634 meters for Tokyo Skytree?",
+        options: ["Year built", "Musi, Mura, Shi", "Founder's birthday", "Distance to Mount Fuji"],
+        correctIndex: 1,
+        fact: "634 can be read as 'Mu-sa-shi' — the historic province where Tokyo sits. Clever wordplay in Japanese numerals.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which Tokugawa shogun established Edo as Japan's political capital?",
+        options: ["Ieyasu", "Hidetada", "Iemitsu", "Yoshimune"],
+        correctIndex: 0,
+        fact: "Tokugawa Ieyasu won the Battle of Sekigahara (1600), moved the shogunate to Edo in 1603, and ruled until his death in 1616.",
+        difficulty: "hard",
+      },
+      {
+        question: "What was the March 1945 Tokyo firebombing's death toll?",
+        options: ["10,000", "50,000", "100,000", "200,000"],
+        correctIndex: 2,
+        fact: "Operation Meetinghouse (March 9–10, 1945) killed ~100,000 in a single night — the most destructive bombing raid in history.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "riddle",
+    riddleBank: [
+      {
+        question: "I speak without a mouth and hear without ears. I have no body, but I come alive with wind. What am I?",
+        answers: ["echo", "an echo"],
+        hints: ["I repeat what you say.", "I bounce off walls.", "You hear me in canyons."],
+        timeLimit: 40,
+      },
+    ],
+  },
+  {
+    id: "sydney",
+    name: "Sydney",
+    subtitle: "Harbour City",
+    region: "Oceania",
+    image: "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800&h=500&fit=crop",
+    jigsawImage: "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=600&h=400&fit=crop",
+    themeColor: "#059669",
+    accentColor: "#34d399",
+    distanceFromPrev: 7800,
+    facts: [
+      "The Sydney Opera House took 14 years to build and was 10 times over budget.",
+      "Sydney Harbour is the world's largest natural harbour and spans 240 km of shoreline.",
+      "The Sydney Harbour Bridge is nicknamed 'The Coathanger' due to its arch-based design.",
+      "Sydney was the site of the first British colony in Australia, established in 1788.",
+      "Bondi Beach is one of the world's most famous beaches, attracting 2.7 million visitors annually.",
+    ],
+    quizQuestions: [
+      {
+        question: "When was the Sydney Opera House opened?",
+        options: ["1959", "1965", "1973", "1981"],
+        correctIndex: 2,
+        fact: "Queen Elizabeth II opened the Opera House on October 20, 1973 — Utzon's iconic design took 14 years.",
+        difficulty: "easy",
+      },
+      {
+        question: "What is Sydney's most famous beach?",
+        options: ["Manly", "Coogee", "Bondi", "Cronulla"],
+        correctIndex: 2,
+        fact: "Bondi Beach is one of the world's most famous beaches and the endpoint of a scenic coastal walk.",
+        difficulty: "easy",
+      },
+      {
+        question: "What animal is featured on Sydney's coat of arms?",
+        options: ["Kangaroo and emu", "Lion and unicorn", "Koala and wombat", "Platypus and echidna"],
+        correctIndex: 0,
+        fact: "The kangaroo and emu were chosen because neither can walk backwards — symbolizing progress.",
+        difficulty: "easy",
+      },
+      {
+        question: "Who designed the Sydney Opera House?",
+        options: ["Frank Lloyd Wright", "Jørn Utzon", "Norman Foster", "Renzo Piano"],
+        correctIndex: 1,
+        fact: "Danish architect Jørn Utzon won the 1957 competition but resigned in 1966 amid cost disputes. He never saw the completed building.",
+        difficulty: "medium",
+      },
+      {
+        question: "What year did the First Fleet arrive in Sydney Cove?",
+        options: ["1770", "1788", "1801", "1815"],
+        correctIndex: 1,
+        fact: "Captain Arthur Phillip landed on January 26, 1788 with 1,480 people (736 convicts). Australia Day commemorates this — controversially.",
+        difficulty: "medium",
+      },
+      {
+        question: "What is the Sydney Harbour Bridge's nickname?",
+        options: ["The Arch", "The Coathanger", "The Span", "The Crossing"],
+        correctIndex: 1,
+        fact: "The single-arch design earned it 'The Coathanger.' It was built during the Depression and opened in 1932.",
+        difficulty: "medium",
+      },
+      {
+        question: "How much did the Sydney Opera House's final cost exceed its original budget?",
+        options: ["2×", "5×", "10×", "14×"],
+        correctIndex: 3,
+        fact: "Estimated at £5.5 million, it cost $102 million (AUD) — roughly 14× over budget. Utzon never received full payment.",
+        difficulty: "hard",
+      },
+      {
+        question: "Which Indigenous people are the traditional custodians of the Sydney area?",
+        options: ["Noongar", "Yolngu", "Eora", "Arrernte"],
+        correctIndex: 2,
+        fact: "The Eora people ('Eora' means 'here' or 'from this place') were decimated by smallpox within 15 months of British arrival.",
+        difficulty: "hard",
+      },
+      {
+        question: "What unique sporting event happens at Bondi Beach every Christmas?",
+        options: ["Surf competition", "Ironman race", "Ice skating", "Lifeguard parade"],
+        correctIndex: 0,
+        fact: "The Bondi to Bronte Ocean Swim (started 1911) and various surf carnivals happen in summer — Christmas Day surfing is a Sydney tradition.",
+        difficulty: "hard",
+      },
+    ],
+    bossPuzzle: "jigsaw",
+  },
+];
+
+export const getChapter = (id: string) => CHAPTERS.find(c => c.id === id);
+export const getChapterIndex = (id: string) => CHAPTERS.findIndex(c => c.id === id);
+export const getTotalDistance = () => CHAPTERS.reduce((sum, c) => sum + (c.distanceFromPrev || 0), 0);
+export const getNextChapter = (currentId: string) => {
+  const idx = getChapterIndex(currentId);
+  return idx >= 0 && idx < CHAPTERS.length - 1 ? CHAPTERS[idx + 1] : null;
+};

@@ -1,131 +1,215 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import RiddlePuzzle from "./RiddlePuzzle";
-import JigsawPuzzle from "./JigsawPuzzle";
+import { useRouter } from "next/navigation";
+import { CHAPTERS, getChapterIndex, getTotalDistance } from "@/data/chapters";
 
-type PuzzleType = "menu" | "riddle" | "jigsaw";
+interface PlayerProgress {
+  completedChapters: string[];
+  currentChapter: string;
+  totalXP: number;
+  totalGold: number;
+  stamps: string[];
+  totalDistanceTraveled: number;
+}
 
-export default function AdventurePage() {
-  const [currentPuzzle, setCurrentPuzzle] = useState<PuzzleType>("menu");
-  const [completedRealms, setCompletedRealms] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const playerLevel = 3;
+export default function WorldMapPage() {
+  const router = useRouter();
+  const [progress, setProgress] = useState<PlayerProgress>({
+    completedChapters: [],
+    currentChapter: "sahara",
+    totalXP: 0,
+    totalGold: 150,
+    stamps: [],
+    totalDistanceTraveled: 0,
+  });
+  const [hoveredCity, setHoveredCity] = useState<string | null>(null);
 
   useEffect(() => {
-    const saved = localStorage.getItem("worldquest_completed_realms");
-    if (saved) setCompletedRealms(parseInt(saved, 10));
+    const saved = localStorage.getItem("worldquest_progress");
+    if (saved) setProgress(JSON.parse(saved));
   }, []);
 
-  const saveCompletedRealms = (count: number) => {
-    localStorage.setItem("worldquest_completed_realms", count.toString());
+  const isUnlocked = (chapterId: string) => {
+    const idx = getChapterIndex(chapterId);
+    if (idx === 0) return true;
+    return progress.completedChapters.includes(CHAPTERS[idx - 1].id);
   };
 
-  const handlePuzzleComplete = () => {
-    setIsTransitioning(true);
-    const nextRealm = completedRealms + 1;
+  const isCompleted = (chapterId: string) => progress.completedChapters.includes(chapterId);
+  const isCurrent = (chapterId: string) => progress.currentChapter === chapterId;
 
-    setTimeout(() => {
-      setCompletedRealms(nextRealm);
-      saveCompletedRealms(nextRealm);
-      setIsTransitioning(false);
-      // Auto-advance: pick the OTHER puzzle type for next realm
-      setCurrentPuzzle(prev => prev === "riddle" ? "jigsaw" : "riddle");
-    }, 2500);
+  const handleCityClick = (chapterId: string) => {
+    if (!isUnlocked(chapterId)) return;
+    router.push(`/adventure/${chapterId}`);
   };
 
-  const handlePuzzleExit = () => {
-    setCurrentPuzzle("menu");
+  const completedCount = progress.completedChapters.length;
+  const totalDistance = getTotalDistance();
+  const progressPercent = Math.round((completedCount / CHAPTERS.length) * 100);
+
+  // Auto-position cities in a curved path across the screen
+  const getCityPosition = (index: number, total: number) => {
+    const x = 10 + (index / (total - 1)) * 80; // 10% to 90% across
+    const y = 30 + Math.sin((index / (total - 1)) * Math.PI) * 25; // Sine wave curve
+    return { x, y };
   };
-
-  // Transition overlay
-  if (isTransitioning) {
-    return (
-      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
-        <div className="text-6xl mb-6 animate-pulse">✦</div>
-        <h2 className="text-3xl font-bold text-cyan-300 mb-2">Realm {completedRealms + 1} Conquered</h2>
-        <p className="text-gray-400">Preparing your next challenge...</p>
-      </div>
-    );
-  }
-
-  if (currentPuzzle === "riddle") {
-    return (
-      <RiddlePuzzle
-        playerLevel={playerLevel}
-        realmNumber={completedRealms + 1}
-        onComplete={handlePuzzleComplete}
-        onExit={handlePuzzleExit}
-      />
-    );
-  }
-
-  if (currentPuzzle === "jigsaw") {
-    return (
-      <JigsawPuzzle
-        playerLevel={playerLevel}
-        realmNumber={completedRealms + 1}
-        onComplete={handlePuzzleComplete}
-        onExit={handlePuzzleExit}
-      />
-    );
-  }
 
   return (
-    <div className="min-h-screen bg-black text-white p-8">
-      <h1 className="text-4xl font-bold mb-2 text-center" style={{ textShadow: "0 0 40px rgba(168,85,247,0.4)" }}>
-        Realm {completedRealms + 1}
-      </h1>
-      <p className="text-center text-gray-400 mb-12">Choose your challenge to unlock the next realm</p>
+    <div className="min-h-screen bg-black text-white relative overflow-hidden">
+      {/* Subtle world map background */}
+      <div className="absolute inset-0 opacity-5">
+        <svg viewBox="0 0 1000 500" className="w-full h-full" fill="none" stroke="currentColor" strokeWidth="0.5">
+          <path d="M200,150 Q250,100 300,130 T400,120 Q500,100 600,140 T750,130 Q850,110 900,150" />
+          <path d="M150,250 Q200,200 280,230 T400,220 Q500,200 620,240 T750,230 Q850,210 920,250" />
+          <path d="M180,350 Q240,300 320,330 T450,320 Q550,300 680,340 T800,330 Q880,310 940,350" />
+        </svg>
+      </div>
 
-      <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-        <button
-          onClick={() => setCurrentPuzzle("riddle")}
-          className="group relative p-8 rounded-3xl text-left transition-all duration-500 hover:scale-[1.02]"
-          style={{
-            background: "linear-gradient(135deg, rgba(168,85,247,0.1), rgba(34,211,238,0.05))",
-            border: "1px solid rgba(168,85,247,0.3)",
-          }}
-        >
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-            style={{ background: "rgba(168,85,247,0.2)", border: "1px solid rgba(168,85,247,0.4)" }}>
-            <svg className="w-7 h-7 text-purple-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-            </svg>
-          </div>
-          <h3 className="text-2xl font-bold mb-2">The Oracle's Riddle</h3>
-          <p className="text-gray-400 text-sm mb-4">Solve the ancient mystery with wit and wisdom. Time is ticking.</p>
-          <div className="flex items-center gap-2 text-purple-300 text-sm">
-            <span>Text-based • Timed</span>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-          </div>
-        </button>
+      {/* Header */}
+      <div className="relative z-10 p-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold" style={{ textShadow: "0 0 40px rgba(168,85,247,0.4)" }}>WorldQuest</h1>
+          <p className="text-sm text-gray-400">Journey Across the Globe</p>
+        </div>
+        <div className="flex items-center gap-4 text-sm">
+          <span className="text-amber-400">🪙 {progress.totalGold}</span>
+          <span className="text-cyan-400">✨ {progress.totalXP} XP</span>
+          <span className="text-purple-400">🎫 {completedCount}/{CHAPTERS.length} Cities</span>
+        </div>
+      </div>
 
-        <button
-          onClick={() => setCurrentPuzzle("jigsaw")}
-          className="group relative p-8 rounded-3xl text-left transition-all duration-500 hover:scale-[1.02]"
-          style={{
-            background: "linear-gradient(135deg, rgba(34,211,238,0.1), rgba(168,85,247,0.05))",
-            border: "1px solid rgba(34,211,238,0.3)",
-          }}
-        >
-          <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
-            style={{ background: "rgba(34,211,238,0.2)", border: "1px solid rgba(34,211,238,0.4)" }}>
-            <svg className="w-7 h-7 text-cyan-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M14.25 6.087c0 .355.189.686.496.865a2.25 2.25 0 010 3.996 1.124 1.124 0 00-.496.865v.75m0-7.501c0 .355.189.686.496.865a2.25 2.25 0 010 3.996 1.124 1.124 0 00-.496.865v.75M6 12h12m-12 0a2.25 2.25 0 00-2.25-2.25M6 12a2.25 2.25 0 012.25-2.25M6 12l6 6m6-6l-6-6m6 6a2.25 2.25 0 012.25-2.25M18 12a2.25 2.25 0 01-2.25 2.25" />
-            </svg>
+      {/* Progress bar */}
+      <div className="relative z-10 px-6 mb-4">
+        <div className="flex items-center justify-between text-xs text-gray-500 mb-2">
+          <span>World Exploration</span>
+          <span>{progressPercent}%</span>
+        </div>
+        <div className="h-2 rounded-full bg-white/10 overflow-hidden">
+          <div className="h-full rounded-full bg-gradient-to-r from-purple-500 to-cyan-500 transition-all duration-1000" style={{ width: `${progressPercent}%` }} />
+        </div>
+        <div className="text-xs text-gray-600 mt-1">
+          {progress.totalDistanceTraveled > 0 ? `${progress.totalDistanceTraveled.toLocaleString()} km traveled` : "Begin your journey"}
+        </div>
+      </div>
+
+      {/* Travel Path Lines */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" style={{ opacity: 0.4 }}>
+        {CHAPTERS.slice(0, -1).map((chapter, i) => {
+          const start = getCityPosition(i, CHAPTERS.length);
+          const end = getCityPosition(i + 1, CHAPTERS.length);
+          const isPathCompleted = isCompleted(chapter.id);
+          return (
+            <line
+              key={`path-${chapter.id}`}
+              x1={`${start.x}%`}
+              y1={`${start.y}%`}
+              x2={`${end.x}%`}
+              y2={`${end.y}%`}
+              stroke={isPathCompleted ? "#22d3ee" : "#333"}
+              strokeWidth="2"
+              strokeDasharray={isPathCompleted ? "0" : "6,6"}
+              strokeLinecap="round"
+            />
+          );
+        })}
+      </svg>
+
+      {/* City Nodes */}
+      <div className="relative z-10 w-full" style={{ height: "calc(100vh - 200px)" }}>
+        {CHAPTERS.map((chapter, index) => {
+          const pos = getCityPosition(index, CHAPTERS.length);
+          const unlocked = isUnlocked(chapter.id);
+          const completed = isCompleted(chapter.id);
+          const current = isCurrent(chapter.id);
+          const hovered = hoveredCity === chapter.id;
+
+          return (
+            <button
+              key={chapter.id}
+              onClick={() => handleCityClick(chapter.id)}
+              onMouseEnter={() => setHoveredCity(chapter.id)}
+              onMouseLeave={() => setHoveredCity(null)}
+              disabled={!unlocked}
+              className={`absolute transform -translate-x-1/2 -translate-y-1/2 transition-all duration-500 ${unlocked ? 'cursor-pointer hover:scale-110' : 'cursor-not-allowed opacity-30'}`}
+              style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
+            >
+              {/* Pulse ring for current chapter */}
+              {(current || completed) && (
+                <div className="absolute inset-0 rounded-full animate-ping opacity-20" style={{ backgroundColor: completed ? chapter.themeColor : chapter.accentColor }} />
+              )}
+
+              {/* City dot */}
+              <div
+                className={`relative w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center transition-all duration-300 ${hovered ? 'scale-125' : ''}`}
+                style={{
+                  background: completed
+                    ? `linear-gradient(135deg, ${chapter.themeColor}50, ${chapter.accentColor}30)`
+                    : unlocked
+                      ? `linear-gradient(135deg, ${chapter.themeColor}30, transparent)`
+                      : "rgba(30,30,30,0.8)",
+                  border: `2px solid ${completed ? chapter.themeColor : unlocked ? chapter.accentColor : '#444'}`,
+                  boxShadow: hovered ? `0 0 30px ${chapter.themeColor}50` : completed ? `0 0 20px ${chapter.themeColor}30` : 'none',
+                }}
+              >
+                {completed ? (
+                  <span className="text-xl md:text-2xl">✈️</span>
+                ) : unlocked ? (
+                  <span className="text-xl md:text-2xl">📍</span>
+                ) : (
+                  <span className="text-lg">🔒</span>
+                )}
+              </div>
+
+              {/* City label */}
+              <div className={`absolute top-full mt-2 left-1/2 -translate-x-1/2 text-center whitespace-nowrap transition-all ${hovered ? 'opacity-100 translate-y-0' : 'opacity-80'}`}>
+                <div className="text-xs md:text-sm font-bold" style={{ color: completed ? chapter.themeColor : unlocked ? chapter.accentColor : '#666' }}>
+                  {chapter.name}
+                </div>
+                <div className="text-[10px] md:text-xs text-gray-500">{chapter.subtitle}</div>
+                {completed && <div className="text-[10px] text-cyan-400 mt-0.5">✓ Conquered</div>}
+                {current && !completed && <div className="text-[10px] text-amber-400 mt-0.5 animate-pulse">→ Current</div>}
+                {!unlocked && chapter.distanceFromPrev && (
+                  <div className="text-[10px] text-gray-600 mt-0.5">{chapter.distanceFromPrev.toLocaleString()} km</div>
+                )}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Passport Preview */}
+      <div className="fixed bottom-6 left-6 z-20">
+        <div className="p-4 rounded-2xl bg-black/80 border border-white/10 backdrop-blur-sm">
+          <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Passport</div>
+          <div className="flex gap-1.5">
+            {CHAPTERS.map(c => (
+              <div
+                key={c.id}
+                className={`w-8 h-10 rounded-md flex items-center justify-center text-xs border ${isCompleted(c.id) ? 'border-cyan-400/50 bg-cyan-400/10' : 'border-white/5 bg-white/5'}`}
+                title={c.name}
+              >
+                {isCompleted(c.id) ? '✓' : '·'}
+              </div>
+            ))}
           </div>
-          <h3 className="text-2xl font-bold mb-2">The Shattered Vision</h3>
-          <p className="text-gray-400 text-sm mb-4">Reassemble the sacred image piece by piece. The realm reveals itself.</p>
-          <div className="flex items-center gap-2 text-cyan-300 text-sm">
-            <span>Visual • Drag & Drop</span>
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
+          <div className="text-[10px] text-gray-600 mt-1.5">{completedCount}/{CHAPTERS.length} stamps collected</div>
+        </div>
+      </div>
+
+      {/* Region legend */}
+      <div className="fixed bottom-6 right-6 z-20">
+        <div className="p-3 rounded-xl bg-black/80 border border-white/10 backdrop-blur-sm">
+          <div className="text-[10px] text-gray-500 uppercase tracking-widest mb-1.5">Regions</div>
+          <div className="space-y-1">
+            {Array.from(new Set(CHAPTERS.map(c => c.region))).map(region => (
+              <div key={region} className="flex items-center gap-2 text-[10px] text-gray-400">
+                <div className="w-2 h-2 rounded-full bg-white/20" />
+                {region}
+              </div>
+            ))}
           </div>
-        </button>
+        </div>
       </div>
     </div>
   );
