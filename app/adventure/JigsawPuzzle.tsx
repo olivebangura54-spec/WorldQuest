@@ -1,4 +1,3 @@
-// app/adventure/JigsawPuzzle.tsx
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
@@ -108,6 +107,9 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
   const [combo, setCombo] = useState(0);
   const [lastCorrectTime, setLastCorrectTime] = useState(0);
 
+  // Keyboard navigation
+  const [focusedPiece, setFocusedPiece] = useState(0);
+
   useEffect(() => {
     const today = new Date().toDateString();
     const savedDaily = localStorage.getItem("worldquest_daily_hints");
@@ -180,6 +182,7 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
 
+  // Initialize pieces
   useEffect(() => {
     const initial: Piece[] = Array.from({ length: totalPieces }, (_, i) => ({
       id: i, correctPos: i, currentPos: i,
@@ -192,12 +195,14 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
     setPieces(initial);
   }, [totalPieces, rotationEnabled]);
 
+  // Timer
   useEffect(() => {
     if (isComplete) return;
     const timer = setInterval(() => setTimeElapsed(t => t + 1), 1000);
     return () => clearInterval(timer);
   }, [isComplete]);
 
+  // Check completion
   useEffect(() => {
     if (pieces.length === 0) return;
     const allCorrect = pieces.every(p => p.correctPos === p.currentPos && p.rotation === 0);
@@ -210,12 +215,14 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
     }
   }, [pieces, onComplete, combo, dailyUsage]);
 
+  // Combo decay
   useEffect(() => {
     if (combo === 0) return;
     const timer = setTimeout(() => setCombo(0), 5000);
     return () => clearTimeout(timer);
   }, [combo]);
 
+  // Ad countdown
   useEffect(() => {
     if (!showAd || adCanSkip) return;
     if (adCountdown <= 0) { setAdCanSkip(true); return; }
@@ -223,12 +230,81 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
     return () => clearTimeout(timer);
   }, [showAd, adCountdown, adCanSkip]);
 
+  // Cleanup
   useEffect(() => {
     return () => {
       if (peekTimerRef.current) clearTimeout(peekTimerRef.current);
       if (adTimerRef.current) clearTimeout(adTimerRef.current);
     };
   }, []);
+
+  // Keyboard handler
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isComplete || showAd || showHintShop) return;
+
+      switch (e.key) {
+        case "ArrowUp":
+          e.preventDefault();
+          setFocusedPiece(p => (p - cols + totalPieces) % totalPieces);
+          break;
+        case "ArrowDown":
+          e.preventDefault();
+          setFocusedPiece(p => (p + cols) % totalPieces);
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          setFocusedPiece(p => (p - 1 + totalPieces) % totalPieces);
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          setFocusedPiece(p => (p + 1) % totalPieces);
+          break;
+        case "r":
+        case "R":
+          if (rotationEnabled) {
+            const piece = pieces.find(p => p.currentPos === focusedPiece);
+            if (piece) handleDoubleClick(piece.id);
+          }
+          break;
+        case "Enter":
+          const piece = pieces.find(p => p.currentPos === focusedPiece);
+          if (piece) {
+            if (selectedPiece === null) {
+              setSelectedPiece(piece.id);
+              setDraggedPiece(piece.id);
+            } else if (selectedPiece !== piece.id) {
+              handleDrop(focusedPiece);
+              setSelectedPiece(null);
+              setDraggedPiece(null);
+            } else {
+              setSelectedPiece(null);
+              setDraggedPiece(null);
+            }
+          }
+          break;
+        case " ":
+          e.preventDefault();
+          if (rotationEnabled && !isPeeking) startPeek();
+          break;
+        case "Escape":
+          setSelectedPiece(null);
+          setDraggedPiece(null);
+          break;
+      }
+    };
+
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === " " && isPeeking) endPeek();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("keyup", handleKeyUp);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("keyup", handleKeyUp);
+    };
+  }, [isComplete, showAd, showHintShop, pieces, focusedPiece, selectedPiece, isPeeking, rotationEnabled, cols, totalPieces]);
 
   const applyReward = (rewardType: "rotateHint" | "peek" | "gold", streakMultiplier: number = 1) => {
     switch (rewardType) {
@@ -729,23 +805,29 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
             const isCorrectRotation = piece.rotation === 0;
             const isFullyCorrect = isCorrectPos && isCorrectRotation;
             const displayRotation = isPeeking ? 0 : piece.rotation;
+            const isFocused = focusedPiece === pos;
 
             return (
               <div
                 key={pos}
-                className={`relative border border-white/5 cursor-pointer transition-all duration-200 ${draggedPiece === piece.id ? 'opacity-50 scale-95' : ''} ${isSelected && !isPeeking ? 'ring-2 ring-amber-400/60 z-10' : ''} ${isFullyCorrect ? '' : 'hover:brightness-125'}`}
+                tabIndex={0}
+                role="button"
+                aria-label={`Piece ${pos + 1} of ${totalPieces}${isFullyCorrect ? ', correctly placed' : isCorrectPos ? ', correct position, needs rotation' : ', misplaced'}`}
+                className={`relative border border-white/5 cursor-pointer transition-all duration-200 ${draggedPiece === piece.id ? 'opacity-50 scale-95' : ''} ${isSelected && !isPeeking ? 'ring-2 ring-amber-400/60 z-10' : ''} ${isFocused ? 'ring-2 ring-white/30' : ''} ${isFullyCorrect ? '' : 'hover:brightness-125'}`}
                 draggable
                 onDragStart={() => handleDragStart(piece.id)}
                 onDragOver={handleDragOver}
                 onDrop={() => handleDrop(pos)}
                 onClick={() => handlePieceClick(piece.id)}
                 onDoubleClick={() => handleDoubleClick(piece.id)}
+                onFocus={() => setFocusedPiece(pos)}
                 style={{
                   backgroundImage: `url(${imageUrl})`,
                   backgroundSize: `${cols * 100}% ${rows * 100}%`,
                   backgroundPosition: `${(col / (cols - 1)) * 100}% ${(row / (rows - 1)) * 100}%`,
                   transform: `rotate(${displayRotation}deg)`,
                   filter: isPeeking && !isFullyCorrect ? 'brightness(1.3) saturate(1.2)' : 'none',
+                  outline: 'none',
                 }}
               >
                 {rotationEnabled && !isFullyCorrect && !isPeeking && (
@@ -778,6 +860,7 @@ export default function JigsawPuzzle({ playerLevel, realmNumber, onComplete, onE
         <div className="mt-6 text-sm text-gray-500 text-center max-w-md space-y-1">
           <p>Drag pieces to swap positions.</p>
           {rotationEnabled && <p className="text-amber-400/70">Click to select, click again to rotate. Double-click for instant rotate. Hold Peek to glimpse correct rotations.</p>}
+          <p className="text-xs text-gray-600">Keyboard: Arrow keys to navigate, Enter to select/swap, R to rotate, Space to peek, Escape to cancel.</p>
         </div>
       )}
 

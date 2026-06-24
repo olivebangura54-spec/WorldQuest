@@ -1,4 +1,3 @@
-// app/adventure/RiddlePuzzle.tsx
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
@@ -54,6 +53,7 @@ export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onE
   const [feedback, setFeedback] = useState<"idle" | "correct" | "wrong" | "timeout">("idle");
   const [shake, setShake] = useState(false);
   const [solved, setSolved] = useState(false);
+  const [showAnswer, setShowAnswer] = useState(false);
 
   useEffect(() => {
     if (timeLeft <= 0 || solved) return;
@@ -62,8 +62,13 @@ export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onE
   }, [timeLeft, solved]);
 
   useEffect(() => {
-    if (timeLeft <= 0 && !solved) setFeedback("timeout");
-  }, [timeLeft, solved]);
+    if (timeLeft <= 0 && !solved) {
+      setFeedback("timeout");
+      setShowAnswer(true);
+      // Auto-advance after showing answer
+      setTimeout(onComplete, 4000);
+    }
+  }, [timeLeft, solved, onComplete]);
 
   const handleSubmit = useCallback(() => {
     const clean = input.trim().toLowerCase();
@@ -113,8 +118,8 @@ export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onE
           className="p-8 rounded-3xl mb-6 relative overflow-hidden"
           style={{
             background: "linear-gradient(135deg, rgba(168,85,247,0.08), rgba(34,211,238,0.04))",
-            border: feedback === "correct" ? "1px solid rgba(34,211,238,0.6)" : "1px solid rgba(168,85,247,0.2)",
-            boxShadow: feedback === "correct" ? "0 0 60px rgba(34,211,238,0.2)" : "none",
+            border: feedback === "correct" ? "1px solid rgba(34,211,238,0.6)" : feedback === "timeout" ? "1px solid rgba(239,68,68,0.4)" : "1px solid rgba(168,85,247,0.2)",
+            boxShadow: feedback === "correct" ? "0 0 60px rgba(34,211,238,0.2)" : feedback === "timeout" ? "0 0 40px rgba(239,68,68,0.15)" : "none",
           }}
         >
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-32 rounded-full opacity-20"
@@ -165,8 +170,17 @@ export default function RiddlePuzzle({ playerLevel, realmNumber, onComplete, onE
               </div>
             )}
             {feedback === "timeout" && (
-              <div className="mt-4 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-center">
-                Time has faded. The vision slips away...
+              <div className="mt-4 space-y-3">
+                <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-300 text-center">
+                  Time has faded. The vision slips away...
+                </div>
+                {showAnswer && (
+                  <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-center animate-pulse">
+                    <div className="text-sm text-amber-400/70 mb-1">The answer was:</div>
+                    <div className="text-lg font-bold">"{riddle.answers[0]}"</div>
+                    <div className="text-xs text-amber-400/50 mt-2">Moving to next realm...</div>
+                  </div>
+                )}
               </div>
             )}
           </div>

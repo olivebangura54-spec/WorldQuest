@@ -1,7 +1,6 @@
-// app/adventure/page.tsx — Adventure Hub
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import RiddlePuzzle from "./RiddlePuzzle";
 import JigsawPuzzle from "./JigsawPuzzle";
 
@@ -10,29 +9,66 @@ type PuzzleType = "menu" | "riddle" | "jigsaw";
 export default function AdventurePage() {
   const [currentPuzzle, setCurrentPuzzle] = useState<PuzzleType>("menu");
   const [completedRealms, setCompletedRealms] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const playerLevel = 3;
 
+  useEffect(() => {
+    const saved = localStorage.getItem("worldquest_completed_realms");
+    if (saved) setCompletedRealms(parseInt(saved, 10));
+  }, []);
+
+  const saveCompletedRealms = (count: number) => {
+    localStorage.setItem("worldquest_completed_realms", count.toString());
+  };
+
   const handlePuzzleComplete = () => {
-    setCompletedRealms(prev => prev + 1);
+    setIsTransitioning(true);
+    const nextRealm = completedRealms + 1;
+
+    setTimeout(() => {
+      setCompletedRealms(nextRealm);
+      saveCompletedRealms(nextRealm);
+      setIsTransitioning(false);
+      // Auto-advance: pick the OTHER puzzle type for next realm
+      setCurrentPuzzle(prev => prev === "riddle" ? "jigsaw" : "riddle");
+    }, 2500);
+  };
+
+  const handlePuzzleExit = () => {
     setCurrentPuzzle("menu");
   };
 
+  // Transition overlay
+  if (isTransitioning) {
+    return (
+      <div className="min-h-screen bg-black text-white flex flex-col items-center justify-center">
+        <div className="text-6xl mb-6 animate-pulse">✦</div>
+        <h2 className="text-3xl font-bold text-cyan-300 mb-2">Realm {completedRealms + 1} Conquered</h2>
+        <p className="text-gray-400">Preparing your next challenge...</p>
+      </div>
+    );
+  }
+
   if (currentPuzzle === "riddle") {
-    return <RiddlePuzzle 
-      playerLevel={playerLevel} 
-      realmNumber={completedRealms + 1}
-      onComplete={handlePuzzleComplete}
-      onExit={() => setCurrentPuzzle("menu")}
-    />;
+    return (
+      <RiddlePuzzle
+        playerLevel={playerLevel}
+        realmNumber={completedRealms + 1}
+        onComplete={handlePuzzleComplete}
+        onExit={handlePuzzleExit}
+      />
+    );
   }
 
   if (currentPuzzle === "jigsaw") {
-    return <JigsawPuzzle 
-      playerLevel={playerLevel}
-      realmNumber={completedRealms + 1}
-      onComplete={handlePuzzleComplete}
-      onExit={() => setCurrentPuzzle("menu")}
-    />;
+    return (
+      <JigsawPuzzle
+        playerLevel={playerLevel}
+        realmNumber={completedRealms + 1}
+        onComplete={handlePuzzleComplete}
+        onExit={handlePuzzleExit}
+      />
+    );
   }
 
   return (
